@@ -29,6 +29,7 @@
     (locked ?a - clamp);clamp is locked
     (touching ?a - vegetable ?b - cuttingboard);vegetable is touching moving and stationary jaw
     (between ?a - vegetable ?b - cuttingboard) ;vegetable is between two clamps
+    (farfrom ?a - cuttingboard) ;the two jaws are far from eachother
     ; peeling
     (partpeeled ?a - vegetable);vegetable is partially peeled
     (peeled ?a - vegetable);vegetable is fully peeled
@@ -57,18 +58,74 @@
         (ontable ?a)
         (not(holding ?a))
         (handempty)
-        ()
     )
 )
 (:action movetoward ;to move toward the jaws (important for vegetable)
-    :parameters ()
-    :precondition (and )
-    :effect (and )
+    :parameters (?a - vegetable ?b - cuttingboard)
+    :precondition (and 
+        (holding ?a)
+        (not(handempty))
+        (not(between ?a ?b))
+    )
+    :effect (between ?a ?b)
 )
 (:action moveaway ;to move away from the jaws (important for vegetable)
-    :parameters ()
-    :precondition (and )
-    :effect (and )
+    :parameters (?a - vegetable ?b - cuttingboard)
+    :precondition (and 
+        (holding ?a)
+        (not(handempty))
+        (between ?a ?b)
+    )
+    :effect (not(between ?a ?b))
+)
+(:action lock ;to lock the clamp
+    :parameters (?a - clamp)
+    :precondition (and
+        (handempty)
+        (not(locked ?a))
+    )
+    :effect (locked ?a)
+)
+(:action unlock ;to unlock the clamp
+    :parameters (?a - clamp)
+    :precondition (and 
+        (handempty)
+        (locked ?a)
+    )
+    :effect (not (locked ?a))
+)
+(:action slidein ;to slide in the moving jaw
+    :parameters (?a - cuttingboard)
+    :precondition (and
+        (not (locked ?a))
+        (farfrom ?a)
+    )
+    :effect (not(farfrom ?a))
+    
+)
+(:action slideout ;to slide out the moving jaw
+    :parameters (?a - cuttingboard)
+    :precondition (and 
+        (not (locked ?a))
+        (not (farfrom ?a))
+    )
+    :effect (farfrom ?a)
 )
 
+(:axiom
+    :vars (?a - cuttingboard ?b - vegetable)
+    :context (and
+        (between ?b ?a)
+        (not(farfrom ?a))
+    )
+    :implies (touching ?b ?a)
+)
+(:axiom
+    :vars (?a - cuttingboard ?b - vegetable)
+    :context (and
+        (between ?b ?a)
+        (farfrom ?a)
+    )
+    :implies (not(touching ?b ?a))
+)
 )
