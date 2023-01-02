@@ -25,10 +25,9 @@
     (ontable ?a - object);peeler/vegetable is on table
     ; robot arm related
     (holding ?a - object);gripper is holding object
-    (handempty);gripper is not holding anything
+    ;(handempty);gripper is not holding anything
     ; cuttingboard related
     (locked ?a - clamp);clamp is locked
-    (touching ?a - vegetable ?b - vice);vegetable is touching moving and stationary jaw
     (between ?a - vegetable ?b - vice) ;vegetable is between two clamps
     (farfrom ?a - vice) ;the two jaws are far from eachother
     ; peeling
@@ -37,11 +36,14 @@
     ; peeler related
 )
 
-(:derived (touching ?a - vegetable ?b - vice)
+(:derived (touching ?a - vegetable ?b - vice) ;vegetable is touching moving and stationary jaw
     (and
         (between ?a ?b)
         (not(farfrom ?b))
     )
+)
+(:derived (handempty)
+    (not(holding ?a))
 )
 
 ;define actions here
@@ -49,11 +51,12 @@
     :parameters (?a - object)
     :precondition (and 
         (handempty)
+        (not(holding ?a))
         (ontable ?a)
     )
     :effect (and
         (holding ?a)
-        (not (handempty))
+        ;(not (handempty))
         (not (ontable ?a))
     ) 
 )
@@ -65,7 +68,7 @@
     :effect (and 
         (ontable ?a)
         (not(holding ?a))
-        (handempty)
+        ;(handempty)
     )
 )
 (:action movetoward ;to move toward the jaws (important for vegetable)
