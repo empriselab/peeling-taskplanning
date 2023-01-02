@@ -129,14 +129,29 @@
         )
 )
 (:action partpeeling ;making progress, partially peeling the vegetable
-    :parameters ()
-    :precondition (and )
-    :effect (and )
+    :parameters (?a - vegetable ?b - peeler ?c - vice ?d - clamp)
+    :precondition (and 
+        (not(peeled ?a))
+        (holding ?b)
+        (touching ?a ?c)
+        (locked ?d)
+    )
+    :effect (and
+        (partpeeled ?a)
+    )
 )
 (:action comppeeling ;completely peeling the vegetable
-    :parameters ()
-    :precondition (and )
-    :effect (and )
+    :parameters (?a - vegetable ?b - peeler ?c - vice ?d - clamp)
+    :precondition (and 
+        (not(peeled ?a))
+        (partpeeled ?a)
+        (holding ?b)
+        (touching ?a ?c)
+        (locked ?d)
+    )
+    :effect (and 
+        (peeled ?a)
+    )
 )
 
 
