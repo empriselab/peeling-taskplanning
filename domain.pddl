@@ -25,12 +25,13 @@
     (ontable ?a - object);peeler/vegetable is on table
     ; robot arm related
     (holding ?a - object);gripper is holding object
-    ;(handempty);gripper is not holding anything
+    (handempty);gripper is not holding anything
     ; cuttingboard related
     (locked ?a - clamp);clamp is locked
     (between ?a - vegetable ?b - vice) ;vegetable is between two clamps
     (farfrom ?a - vice) ;the two jaws are far from eachother
     ; peeling
+    (toppeeled ?a - vegetable);vegetable is peeled on top (partially peeled)
     (partpeeled ?a - vegetable);vegetable is partially peeled
     (peeled ?a - vegetable);vegetable is fully peeled (not peeled implies partpeeled or not peeled at all)
     ; peeler related
@@ -44,6 +45,9 @@
 )
 (:derived (handempty)
     (not(holding ?a))
+)
+(:derived (not(holding ?a - object))
+    (handempty)
 )
 
 ;define actions here
@@ -132,11 +136,13 @@
     :parameters (?a - vegetable ?b - peeler ?c - vice ?d - clamp)
     :precondition (and 
         (not(peeled ?a))
+        (not(toppeeled ?a))
         (holding ?b)
         (touching ?a ?c)
         (locked ?d)
     )
     :effect (and
+        (toppeeled ?a)
         (partpeeled ?a)
     )
 )
@@ -144,6 +150,7 @@
     :parameters (?a - vegetable ?b - peeler ?c - vice ?d - clamp)
     :precondition (and 
         (not(peeled ?a))
+        (not(toppeeled ?a))
         (partpeeled ?a)
         (holding ?b)
         (touching ?a ?c)
@@ -151,6 +158,18 @@
     )
     :effect (and 
         (peeled ?a)
+    )
+)
+(:action rotate
+    :parameters (?a - vegetable ?b - clamp ?c - vice)
+    :precondition (and 
+        (not (locked ?b))
+        (toppeeled ?a)
+        (not(handempty))
+    )
+    :effect (and 
+        (not (toppeeled ?a))
+        (farfrom ?v) ; assuming that I have to readjust vice everytime I rotate
     )
 )
 
