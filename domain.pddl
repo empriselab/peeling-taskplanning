@@ -6,7 +6,8 @@
 (define (domain emprise)
 
 ;remove requirements that are not needed
-(:requirements          :strips                 :typing )
+(:requirements 
+    :strips :typing :derived-predicates)
 ;  :durative-actions      :timed-initial-literals :fluents 
 ;  :conditional-effects   :negative-preconditions 
 ;  :duration-inequalities :equality)
@@ -14,7 +15,7 @@
 (:types ;todo: enumerate types and their hierarchy here, e.g. car truck bus - vehicle
     movjaw statjaw - vice ;assumes board is apart of table
     wall clamp - movjaw ;two parts to moving jaw: clamp and wall
-    peeler vegetable - object;assuming fruits are vegetables too
+    peeler vegetable ; assuming fruits are vegetables too
 )
 
 ; un-comment following line if constants are needed
@@ -34,6 +35,13 @@
     (partpeeled ?a - vegetable);vegetable is partially peeled
     (peeled ?a - vegetable);vegetable is fully peeled (not peeled implies partpeeled or not peeled at all)
     ; peeler related
+)
+
+(:derived (touching ?a - vegetable ?b - vice)
+    (and
+        (between ?a ?b)
+        (not(farfrom ?b))
+    )
 )
 
 ;define actions here
