@@ -3,16 +3,16 @@
 
 ;Header and description
 
-(define (domain domain_name)
+(define (domain emprise)
 
 ;remove requirements that are not needed
-(:requirements          :strips                 :fluents 
- :durative-actions      :timed-initial-literals :typing 
- :conditional-effects   :negative-preconditions 
- :duration-inequalities :equality)
+(:requirements          :strips                 :typing )
+;  :durative-actions      :timed-initial-literals :fluents 
+;  :conditional-effects   :negative-preconditions 
+;  :duration-inequalities :equality)
 
 (:types ;todo: enumerate types and their hierarchy here, e.g. car truck bus - vehicle
-    movjaw statjaw - cuttingboard ;assumes board is apart of table
+    movjaw statjaw - vice ;assumes board is apart of table
     wall clamp - movjaw ;two parts to moving jaw: clamp and wall
     peeler vegetable - object;assuming fruits are vegetables too
 )
@@ -27,12 +27,12 @@
     (handempty);gripper is not holding anything
     ; cuttingboard related
     (locked ?a - clamp);clamp is locked
-    (touching ?a - vegetable ?b - cuttingboard);vegetable is touching moving and stationary jaw
-    (between ?a - vegetable ?b - cuttingboard) ;vegetable is between two clamps
-    (farfrom ?a - cuttingboard) ;the two jaws are far from eachother
+    (touching ?a - vegetable ?b - vice);vegetable is touching moving and stationary jaw
+    (between ?a - vegetable ?b - vice) ;vegetable is between two clamps
+    (farfrom ?a - vice) ;the two jaws are far from eachother
     ; peeling
     (partpeeled ?a - vegetable);vegetable is partially peeled
-    (peeled ?a - vegetable);vegetable is fully peeled
+    (peeled ?a - vegetable);vegetable is fully peeled (not peeled implies partpeeled or not peeled at all)
     ; peeler related
 )
 
@@ -61,7 +61,7 @@
     )
 )
 (:action movetoward ;to move toward the jaws (important for vegetable)
-    :parameters (?a - vegetable ?b - cuttingboard)
+    :parameters (?a - vegetable ?b - vice)
     :precondition (and 
         (holding ?a)
         (not(handempty))
@@ -70,7 +70,7 @@
     :effect (between ?a ?b)
 )
 (:action moveaway ;to move away from the jaws (important for vegetable)
-    :parameters (?a - vegetable ?b - cuttingboard)
+    :parameters (?a - vegetable ?b - vice)
     :precondition (and 
         (holding ?a)
         (not(handempty))
@@ -95,37 +95,54 @@
     :effect (not (locked ?a))
 )
 (:action slidein ;to slide in the moving jaw
-    :parameters (?a - cuttingboard)
+    :parameters (?a - vice ?b - vegetable)
     :precondition (and
         (not (locked ?a))
         (farfrom ?a)
+        (between ?b ?a)
     )
-    :effect (not(farfrom ?a))
-    
+    :effect (and
+        (not(farfrom ?a))
+        (touching ?b ?a)
+    )
 )
 (:action slideout ;to slide out the moving jaw
-    :parameters (?a - cuttingboard)
+    :parameters (?a - vice ?b - vegetable)
     :precondition (and 
         (not (locked ?a))
         (not (farfrom ?a))
     )
-    :effect (farfrom ?a)
+    :effect (and
+        (farfrom ?a)
+        (not(touching ?b ?a))
+        )
+)
+(:action partpeeling ;making progress, partially peeling the vegetable
+    :parameters ()
+    :precondition (and )
+    :effect (and )
+)
+(:action comppeeling ;completely peeling the vegetable
+    :parameters ()
+    :precondition (and )
+    :effect (and )
 )
 
-(:axiom
-    :vars (?a - cuttingboard ?b - vegetable)
-    :context (and
-        (between ?b ?a)
-        (not(farfrom ?a))
-    )
-    :implies (touching ?b ?a)
-)
-(:axiom
-    :vars (?a - cuttingboard ?b - vegetable)
-    :context (and
-        (between ?b ?a)
-        (farfrom ?a)
-    )
-    :implies (not(touching ?b ?a))
-)
+
+; (:axiom
+;     :vars (?a - vice ?b - vegetable)
+;     :context (and
+;         (between ?b ?a)
+;         (not(farfrom ?a))
+;     )
+;     :implies (touching ?b ?a)
+; )
+; (:axiom
+;     :vars (?a - vice ?b - vegetable)
+;     :context (and
+;         (between ?b ?a)
+;         (farfrom ?a)
+;     )
+;     :implies (not(touching ?b ?a))
+; )
 )
