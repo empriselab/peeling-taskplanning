@@ -43,12 +43,6 @@
         (not(farfrom ?b))
     )
 )
-(:derived (handempty)
-    (not(holding ?a))
-)
-(:derived (not(holding ?a - object))
-    (handempty)
-)
 
 ;define actions here
 (:action pickup ; to pick up from table
@@ -60,7 +54,7 @@
     )
     :effect (and
         (holding ?a)
-        ;(not (handempty))
+        (not (handempty))
         (not (ontable ?a))
     ) 
 )
@@ -72,7 +66,7 @@
     :effect (and 
         (ontable ?a)
         (not(holding ?a))
-        ;(handempty)
+        (handempty)
     )
 )
 (:action movetoward ;to move toward the jaws (important for vegetable)
@@ -158,6 +152,7 @@
     )
     :effect (and 
         (peeled ?a)
+        (not(partpeeled ?a))
     )
 )
 (:action rotate
@@ -173,21 +168,4 @@
     )
 )
 
-
-; (:axiom
-;     :vars (?a - vice ?b - vegetable)
-;     :context (and
-;         (between ?b ?a)
-;         (not(farfrom ?a))
-;     )
-;     :implies (touching ?b ?a)
-; )
-; (:axiom
-;     :vars (?a - vice ?b - vegetable)
-;     :context (and
-;         (between ?b ?a)
-;         (farfrom ?a)
-;     )
-;     :implies (not(touching ?b ?a))
-; )
 )
