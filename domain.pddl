@@ -13,9 +13,9 @@
 ;  :duration-inequalities :equality)
 
 (:types ;todo: enumerate types and their hierarchy here, e.g. car truck bus - vehicle
-    movjaw statjaw - vice ;assumes board is apart of table
+    movjaw statjaw - object ;assumes board is apart of table
     wall clamp - movjaw ;two parts to moving jaw: clamp and wall
-    peeler vegetable ; assuming fruits are vegetables too
+    peeler vegetable - object ; assuming fruits are vegetables too
 )
 
 ; un-comment following line if constants are needed
@@ -28,8 +28,8 @@
     (handempty);gripper is not holding anything
     ; cuttingboard related
     (locked ?a - clamp);clamp is locked
-    (between ?a - vegetable ?b - vice) ;vegetable is between two clamps
-    (farfrom ?a - vice) ;the two jaws are far from eachother
+    (between ?a - vegetable ?b - movjaw ?c - statjaw) ;vegetable is between two clamps
+    (farfrom ?a - movjaw ?b - statjaw) ;the two jaws are far from eachother
     ; peeling
     (toppeeled ?a - vegetable);vegetable is peeled on top (partially peeled)
     (partpeeled ?a - vegetable);vegetable is partially peeled
@@ -37,10 +37,10 @@
     ; peeler related
 )
 
-(:derived (touching ?a - vegetable ?b - vice) ;vegetable is touching moving and stationary jaw
+(:derived (touching ?a - vegetable ?b - movjaw ?c - statjaw) ;vegetable is touching moving and stationary jaw
     (and
-        (between ?a ?b)
-        (not(farfrom ?b))
+        (between ?a ?b ?c)
+        (not(farfrom ?b ?c))
     )
 )
 
@@ -70,22 +70,22 @@
     )
 )
 (:action movetoward ;to move toward the jaws (important for vegetable)
-    :parameters (?a - vegetable ?b - vice)
+    :parameters (?a - vegetable ?b - movjaw ?c - statjaw)
     :precondition (and 
         (holding ?a)
         (not(handempty))
-        (not(between ?a ?b))
+        (not(between ?a ?b ?c))
     )
-    :effect (between ?a ?b)
+    :effect (between ?a ?b ?c)
 )
 (:action moveaway ;to move away from the jaws (important for vegetable)
-    :parameters (?a - vegetable ?b - vice)
+    :parameters (?a - vegetable ?b - movjaw ?c - statjaw)
     :precondition (and 
         (holding ?a)
         (not(handempty))
-        (between ?a ?b)
+        (between ?a ?b ?c)
     )
-    :effect (not(between ?a ?b))
+    :effect (not(between ?a ?b ?c))
 )
 (:action lock ;to lock the clamp
     :parameters (?a - clamp)
@@ -104,36 +104,36 @@
     :effect (not (locked ?a))
 )
 (:action slidein ;to slide in the moving jaw
-    :parameters (?a - vice ?b - vegetable)
+    :parameters (?a - clamp ?b - vegetable ?c - movjaw ?d - statjaw)
     :precondition (and
         (not (locked ?a))
-        (farfrom ?a)
-        (between ?b ?a)
+        (farfrom ?c ?d)
+        (between ?b ?c ?d)
     )
     :effect (and
         (not(farfrom ?a))
-        (touching ?b ?a)
+        ;(touching ?b ?a)
     )
 )
 (:action slideout ;to slide out the moving jaw
-    :parameters (?a - vice ?b - vegetable)
+    :parameters (?a - clamp ?b - vegetable ?c - movjaw ?d - statjaw)
     :precondition (and 
         (not (locked ?a))
-        (not (farfrom ?a))
+        (not (farfrom ?c ?d))
     )
     :effect (and
-        (farfrom ?a)
-        (not(touching ?b ?a))
+        (farfrom ?c ?d)
+        ;(not(touching ?b ?a))
         )
 )
 (:action partpeeling ;making progress, partially peeling the vegetable
-    :parameters (?a - vegetable ?b - peeler ?c - vice ?d - clamp)
+    :parameters (?a - vegetable ?b - peeler ?c - movjaw ?d - statjaw ?e - clamp)
     :precondition (and 
         (not(peeled ?a))
         (not(toppeeled ?a))
         (holding ?b)
-        (touching ?a ?c)
-        (locked ?d)
+        (touching ?a ?c ?d)
+        (locked ?e)
     )
     :effect (and
         (toppeeled ?a)
@@ -141,14 +141,14 @@
     )
 )
 (:action comppeeling ;completely peeling the vegetable
-    :parameters (?a - vegetable ?b - peeler ?c - vice ?d - clamp)
+    :parameters (?a - vegetable ?b - peeler ?c - movjaw ?d - statjaw ?e - clamp)
     :precondition (and 
         (not(peeled ?a))
         (not(toppeeled ?a))
         (partpeeled ?a)
         (holding ?b)
-        (touching ?a ?c)
-        (locked ?d)
+        (touching ?a ?c ?d)
+        (locked ?e)
     )
     :effect (and 
         (peeled ?a)
@@ -156,7 +156,7 @@
     )
 )
 (:action rotate
-    :parameters (?a - vegetable ?b - clamp ?c - vice)
+    :parameters (?a - vegetable ?b - clamp ?c - movjaw ?d - statjaw)
     :precondition (and 
         (not (locked ?b))
         (toppeeled ?a)
@@ -164,7 +164,7 @@
     )
     :effect (and 
         (not (toppeeled ?a))
-        (farfrom ?v) ; assuming that I have to readjust vice everytime I rotate
+        (farfrom ?c ?d) ; assuming that I have to readjust vice everytime I rotate
     )
 )
 
