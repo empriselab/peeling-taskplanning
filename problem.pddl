@@ -5,7 +5,6 @@
 (:objects
     p - peeler
     ve - vegetable
-    vi - vice
     sj - statjaw
     mj - movjaw
     w - wall
@@ -19,9 +18,10 @@
     (handempty)
 
     (locked c)
-    (not(between ve vi))
-    (not(farfrom vi))
+    (not(between ve mj sj))
+    (not(farfrom mj sj))
 
+    (not(toppeeled ve))
     (not(partpeeled ve))
     (not(peeled ve))
 )
