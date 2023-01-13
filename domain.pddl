@@ -7,7 +7,7 @@
 
 ;remove requirements that are not needed
 (:requirements 
-    :strips :typing :derived-predicates)
+    :strips :typing :derived-predicates :negative-preconditions)
 ;  :durative-actions      :timed-initial-literals :fluents 
 ;  :conditional-effects   :negative-preconditions 
 ;  :duration-inequalities :equality)
@@ -30,6 +30,7 @@
     (locked ?a - clamp);clamp is locked
     (between ?a - vegetable ?b - movjaw ?c - statjaw) ;vegetable is between two clamps
     (farfrom ?a - movjaw ?b - statjaw) ;the two jaws are far from eachother
+    (touching ?a - vegetable ?b - movjaw ?c - statjaw)
     ; peeling
     (toppeeled ?a - vegetable);vegetable is peeled on top (partially peeled)
     (partpeeled ?a - vegetable);vegetable is partially peeled
