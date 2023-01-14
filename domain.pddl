@@ -1,25 +1,19 @@
 ;; This is the domain of a world where a robot arm picks up a given object, 
 ;; peels it using a designated commersial peeler and puts it back down.
 
-;Header and description
+;;; CHANGES FOR NXT TIME: make three state of vice: "too close", "just right", "too far"
 
 (define (domain emprise)
 
 ;remove requirements that are not needed
 (:requirements 
     :strips :typing :derived-predicates :negative-preconditions)
-;  :durative-actions      :timed-initial-literals :fluents 
-;  :conditional-effects   :negative-preconditions 
-;  :duration-inequalities :equality)
 
 (:types ;todo: enumerate types and their hierarchy here, e.g. car truck bus - vehicle
     movjaw statjaw - object ;assumes board is apart of table
     wall clamp - movjaw ;two parts to moving jaw: clamp and wall
     peeler vegetable - object ; assuming fruits are vegetables too
 )
-
-; un-comment following line if constants are needed
-;(:constants )
 
 (:predicates ;todo: define predicates here
     (ontable ?a - object);peeler/vegetable is on table
@@ -30,20 +24,12 @@
     (locked ?a - clamp);clamp is locked
     (between ?a - vegetable ?b - movjaw ?c - statjaw) ;vegetable is between two clamps
     (farfrom ?a - movjaw ?b - statjaw) ;the two jaws are far from eachother
-    ; (touching ?a - vegetable ?b - movjaw ?c - statjaw)
     ; peeling
     (toppeeled ?a - vegetable);vegetable is peeled on top (partially peeled)
     (partpeeled ?a - vegetable);vegetable is partially peeled
     (peeled ?a - vegetable);vegetable is fully peeled (not peeled implies partpeeled or not peeled at all)
     ; peeler related
 )
-
-; (:derived (touching ?a - vegetable ?b - movjaw ?c - statjaw) ;vegetable is touching moving and stationary jaw
-;     (and
-;         (between ?a ?b ?c)
-;         (not(farfrom ?b ?c))
-;     )
-; )
 
 ;define actions here
 (:action pickup ; to pick up from table
@@ -112,8 +98,7 @@
         (between ?b ?c ?d)
     )
     :effect (and
-        (not(farfrom ?a))
-        ;(touching ?b ?a)
+        (not(farfrom ?c ?d))
     )
 )
 (:action slideout ;to slide out the moving jaw
@@ -124,7 +109,6 @@
     )
     :effect (and
         (farfrom ?c ?d)
-        ;(not(touching ?b ?a))
         )
 )
 (:action partpeeling ;making progress, partially peeling the vegetable
@@ -163,7 +147,7 @@
     :precondition (and 
         (not (locked ?b))
         (toppeeled ?a)
-        (not(handempty))
+        (handempty)
     )
     :effect (and 
         (not (toppeeled ?a))
