@@ -30,7 +30,7 @@
     (locked ?a - clamp);clamp is locked
     (between ?a - vegetable ?b - movjaw ?c - statjaw) ;vegetable is between two clamps
     (farfrom ?a - movjaw ?b - statjaw) ;the two jaws are far from eachother
-    (touching ?a - vegetable ?b - movjaw ?c - statjaw)
+    ; (touching ?a - vegetable ?b - movjaw ?c - statjaw)
     ; peeling
     (toppeeled ?a - vegetable);vegetable is peeled on top (partially peeled)
     (partpeeled ?a - vegetable);vegetable is partially peeled
@@ -38,12 +38,12 @@
     ; peeler related
 )
 
-(:derived (touching ?a - vegetable ?b - movjaw ?c - statjaw) ;vegetable is touching moving and stationary jaw
-    (and
-        (between ?a ?b ?c)
-        (not(farfrom ?b ?c))
-    )
-)
+; (:derived (touching ?a - vegetable ?b - movjaw ?c - statjaw) ;vegetable is touching moving and stationary jaw
+;     (and
+;         (between ?a ?b ?c)
+;         (not(farfrom ?b ?c))
+;     )
+; )
 
 ;define actions here
 (:action pickup ; to pick up from table
@@ -133,9 +133,10 @@
         (not(peeled ?a))
         (not(toppeeled ?a))
         (holding ?b)
-        (touching ?a ?c ?d)
         (locked ?e)
-    )
+        (between ?a ?c ?d)
+        (not(farfrom ?c ?d))
+        )
     :effect (and
         (toppeeled ?a)
         (partpeeled ?a)
@@ -148,9 +149,10 @@
         (not(toppeeled ?a))
         (partpeeled ?a)
         (holding ?b)
-        (touching ?a ?c ?d)
         (locked ?e)
-    )
+        (between ?a ?c ?d)
+        (not(farfrom ?c ?d))
+        )
     :effect (and 
         (peeled ?a)
         (not(partpeeled ?a))
