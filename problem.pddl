@@ -14,6 +14,8 @@
     (ontable food_item)
 
     (handempty)
+    (not(holding food_item))
+    (not(holding peeler))
 
     (locked clamp)
     (not(between food_item moving_jaw stationary_jaw))

@@ -20,7 +20,7 @@
     (handempty);gripper is not holding anything
     ; cuttingboard related
     (locked ?a - clamp);clamp is locked
-    (between ?a - vegetable ?b - movjaw ?c - statjaw) ;vegetable is between two clamps
+    (between ?a - vegetable ?b - movjaw ?c - statjaw) ;vegetable is between two clamps (can be ontable or not)
     (toofar ?a - movjaw ?b - statjaw) ;the two jaws are too far from eachother
     (tooclose ?a - movjaw ?b - statjaw) ; the jaws are too close to eachother
     (rightdistance ?a - movjaw ?b - statjaw) ; the distance between the jaws is the width of vegetable
@@ -49,6 +49,7 @@
     :parameters (?a - object)
     :precondition (and 
         (holding ?a)
+        (not(ontable ?a))
     )
     :effect (and 
         (ontable ?a)
@@ -60,6 +61,7 @@
     :parameters (?a - vegetable ?b - movjaw ?c - statjaw)
     :precondition (and 
         (holding ?a)
+        (not(ontable ?a))
         (not(handempty))
         (not(between ?a ?b ?c))
     )
