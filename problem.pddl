@@ -3,33 +3,33 @@
 (define (problem peeling)(:domain emprise)
 
 (:objects
-    p - peeler
-    ve - vegetable
-    sj - statjaw
-    mj - movjaw
-    w - wall
-    c - clamp
+    peeler
+    food_item - vegetable
+    stationary_jaw - statjaw
+    moving_jaw - movjaw
+    wall
+    clamp
 )
 
 (:init
-    (ontable p)
-    (ontable ve)
+    (ontable peeler)
+    (ontable food_item)
 
     (handempty)
 
-    (locked c)
-    (not(between ve mj sj))
-    (not(farfrom mj sj))
+    (locked clamp)
+    (not(between food_item moving_jaw stationary_jaw))
+    (not(farfrom moving_jaw stationary_jaw))
 
-    (not(toppeeled ve))
-    (not(partpeeled ve))
-    (not(peeled ve))
+    (not(toppeeled food_item))
+    (not(partpeeled food_item))
+    (not(peeled food_item))
 )
 
 (:goal (and
-    (ontable ve)
+    (ontable food_item)
 
-    (not(partpeeled ve))
-    (peeled ve)
+    (not(partpeeled food_item))
+    (peeled food_item)
 ))
 )
