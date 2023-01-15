@@ -5,7 +5,7 @@
 
 ;remove requirements that are not needed
 (:requirements 
-    :strips :typing :derived-predicates :negative-preconditions)
+    :strips :typing :negative-preconditions :disjunctive-preconditions)
 
 (:types ;todo: enumerate types and their hierarchy here, e.g. car truck bus - vehicle
     movjaw statjaw - object ;assumes board is apart of table
