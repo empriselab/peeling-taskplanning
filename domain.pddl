@@ -1,8 +1,6 @@
 ;; This is the domain of a world where a robot arm picks up a given object, 
 ;; peels it using a designated commersial peeler and puts it back down.
 
-;;; CHANGES FOR NXT TIME: make three state of vice: "too close", "just right", "too far"
-
 (define (domain emprise)
 
 ;remove requirements that are not needed
@@ -23,7 +21,9 @@
     ; cuttingboard related
     (locked ?a - clamp);clamp is locked
     (between ?a - vegetable ?b - movjaw ?c - statjaw) ;vegetable is between two clamps
-    (farfrom ?a - movjaw ?b - statjaw) ;the two jaws are far from eachother
+    (toofar ?a - movjaw ?b - statjaw) ;the two jaws are too far from eachother
+    (tooclose ?a - movjaw ?b - statjaw) ; the jaws are too close to eachother
+    (rightdistance ?a - movjaw ?b - statjaw) ; the distance between the jaws is the width of vegetable
     ; peeling
     (toppeeled ?a - vegetable);vegetable is peeled on top (partially peeled)
     (partpeeled ?a - vegetable);vegetable is partially peeled
@@ -94,21 +94,30 @@
     :parameters (?a - clamp ?b - vegetable ?c - movjaw ?d - statjaw)
     :precondition (and
         (not (locked ?a))
-        (farfrom ?c ?d)
+        
+        (toofar ?c ?d)
+        (not (tooclose ?c ?d))
+        (not (rightdistance ?c ?d))
+
         (between ?b ?c ?d)
     )
     :effect (and
-        (not(farfrom ?c ?d))
+        (not(toofar ?c ?d))
+        (rightdistance ?c ?d)
     )
 )
 (:action slideout ;to slide out the moving jaw
     :parameters (?a - clamp ?b - vegetable ?c - movjaw ?d - statjaw)
     :precondition (and 
-        (not (locked ?a))
-        (not (farfrom ?c ?d))
+        (not(locked ?a))
+        
+        (not(toofar ?c ?d)) ; too close or rightdistance
+        (or(tooclose ?c ?d) (rightdistance ?c ?d))
     )
     :effect (and
-        (farfrom ?c ?d)
+        (toofar ?c ?d)
+        (not(tooclose ?c ?d))
+        (not(rightdistance ?c ?d))
         )
 )
 (:action partpeeling ;making progress, partially peeling the vegetable
@@ -119,7 +128,10 @@
         (holding ?b)
         (locked ?e)
         (between ?a ?c ?d)
-        (not(farfrom ?c ?d))
+        
+        (not(toofar ?c ?d))
+        (not(tooclose ?c ?d))
+        (rightdistance ?c ?d)
         )
     :effect (and
         (toppeeled ?a)
@@ -135,7 +147,10 @@
         (holding ?b)
         (locked ?e)
         (between ?a ?c ?d)
-        (not(farfrom ?c ?d))
+        
+        (not(toofar ?c ?d))
+        (not(tooclose ?c ?d))
+        (rightdistance ?c ?d)
         )
     :effect (and 
         (peeled ?a)
@@ -148,10 +163,14 @@
         (not (locked ?b))
         (toppeeled ?a)
         (handempty)
+
+        (not(tooclose ?c ?d))
+        (or(rightdistance ?c ?d) (toofar ?c ?d))
     )
     :effect (and 
         (not (toppeeled ?a))
-        (farfrom ?c ?d) ; assuming that I have to readjust vice everytime I rotate
+        (toofar ?c ?d) ; assuming that I have to readjust vice everytime I rotate
+        (not(rightdistance ?c ?d))
     )
 )
 
