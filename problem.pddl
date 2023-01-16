@@ -5,7 +5,7 @@
     food_item - vegetable
     stationary_jaw - statjaw
     moving_jaw - movjaw
-    jaw_clamp - clamp
+    vice_handle - handle
 )
 
 (:init
@@ -16,7 +16,7 @@
     (not(holding food_item))
     (not(holding food_peeler))
 
-    (locked jaw_clamp)
+    (locked vice_handle)
     (not(between food_item moving_jaw stationary_jaw))
     (not(toofar moving_jaw stationary_jaw))
     (not(rightdistance moving_jaw stationary_jaw))

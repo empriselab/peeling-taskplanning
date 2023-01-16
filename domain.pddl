@@ -19,8 +19,8 @@
     (holding ?a - object);gripper is holding object
     (handempty);gripper is not holding anything
     ; cuttingboard related
-    (locked ?a - clamp);clamp is locked
-    (between ?a - vegetable ?b - movjaw ?c - statjaw) ;vegetable is between two clamps (can be ontable or not)
+    (locked ?a - handle);handle is locked
+    (between ?a - vegetable ?b - movjaw ?c - statjaw) ;vegetable is between two jaws (can be ontable or not)
     (toofar ?a - movjaw ?b - statjaw) ;the two jaws are too far from eachother
     (tooclose ?a - movjaw ?b - statjaw) ; the jaws are too close to eachother
     (rightdistance ?a - movjaw ?b - statjaw) ; the distance between the jaws is the width of vegetable
@@ -76,16 +76,16 @@
     )
     :effect (not(between ?a ?b ?c))
 )
-(:action lock ;to lock the clamp
-    :parameters (?a - clamp)
+(:action lock ;to lock the handle
+    :parameters (?a - handle)
     :precondition (and
         (handempty)
         (not(locked ?a))
     )
     :effect (locked ?a)
 )
-(:action unlock ;to unlock the clamp
-    :parameters (?a - clamp)
+(:action unlock ;to unlock the handle
+    :parameters (?a - handle)
     :precondition (and 
         (handempty)
         (locked ?a)
@@ -93,7 +93,7 @@
     :effect (not (locked ?a))
 )
 (:action slidein ;to slide in the moving jaw
-    :parameters (?a - clamp ?b - vegetable ?c - movjaw ?d - statjaw)
+    :parameters (?a - handle ?b - vegetable ?c - movjaw ?d - statjaw)
     :precondition (and
         (not (locked ?a))
         
@@ -109,7 +109,7 @@
     )
 )
 (:action slideout ;to slide out the moving jaw
-    :parameters (?a - clamp ?b - vegetable ?c - movjaw ?d - statjaw)
+    :parameters (?a - handle ?b - vegetable ?c - movjaw ?d - statjaw)
     :precondition (and 
         (not(locked ?a))
         
@@ -123,7 +123,7 @@
         )
 )
 (:action peeling ;making progress, partially peeling the vegetable
-    :parameters (?a - vegetable ?b - peeler ?c - movjaw ?d - statjaw ?e - clamp)
+    :parameters (?a - vegetable ?b - peeler ?c - movjaw ?d - statjaw ?e - handle)
     :precondition (and 
         (not(peeled ?a))
         (not(toppeeled ?a))
@@ -141,7 +141,7 @@
     )
 )
 (:action rotate
-    :parameters (?a - vegetable ?b - clamp ?c - movjaw ?d - statjaw)
+    :parameters (?a - vegetable ?b - handle ?c - movjaw ?d - statjaw)
     :precondition (and 
         (not (locked ?b))
         (toppeeled ?a)
