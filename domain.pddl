@@ -8,7 +8,7 @@
     :strips :typing :negative-preconditions :disjunctive-preconditions)
 
 (:types
-    clamp movjaw statjaw - object ;assumes board is apart of table
+    handle movjaw statjaw - object ;assumes board is apart of table
     peeler vegetable - object ; assuming fruits are vegetables too
 )
 
