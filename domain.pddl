@@ -3,17 +3,17 @@
 
 (define (domain emprise)
 
-;remove requirements that are not needed
+
 (:requirements 
     :strips :typing :negative-preconditions :disjunctive-preconditions)
 
-(:types ;todo: enumerate types and their hierarchy here, e.g. car truck bus - vehicle
-    movjaw statjaw - object ;assumes board is apart of table
-    wall clamp - movjaw ;two parts to moving jaw: clamp and wall
+(:types
+    clamp movjaw statjaw - object ;assumes board is apart of table
     peeler vegetable - object ; assuming fruits are vegetables too
 )
 
-(:predicates ;todo: define predicates here
+
+(:predicates
     (ontable ?a - object);peeler/vegetable is on table
     ; robot arm related
     (holding ?a - object);gripper is holding object
@@ -26,12 +26,10 @@
     (rightdistance ?a - movjaw ?b - statjaw) ; the distance between the jaws is the width of vegetable
     ; peeling
     (toppeeled ?a - vegetable);vegetable is peeled on top (partially peeled)
-    (partpeeled ?a - vegetable);vegetable is partially peeled
     (peeled ?a - vegetable);vegetable is fully peeled (not peeled implies partpeeled or not peeled at all)
-    ; peeler related
 )
 
-;define actions here
+
 (:action pickup ; to pick up from table
     :parameters (?a - object)
     :precondition (and 
@@ -64,6 +62,8 @@
         (not(ontable ?a))
         (not(handempty))
         (not(between ?a ?b ?c))
+        (not(tooclose ?b ?c))
+        (or(rightdistance ?b ?c)(toofar ?b ?c))
     )
     :effect (between ?a ?b ?c)
 )
@@ -137,28 +137,9 @@
         )
     :effect (and
         (toppeeled ?a)
-        (oneof (and) (peeled ?a))
+        (oneof (not(peeled ?a)) (peeled ?a))
     )
 )
-; (:action comppeeling ;completely peeling the vegetable
-;     :parameters (?a - vegetable ?b - peeler ?c - movjaw ?d - statjaw ?e - clamp)
-;     :precondition (and 
-;         (not(peeled ?a))
-;         (not(toppeeled ?a))
-;         (partpeeled ?a)
-;         (holding ?b)
-;         (locked ?e)
-;         (between ?a ?c ?d)
-        
-;         (not(toofar ?c ?d))
-;         (not(tooclose ?c ?d))
-;         (rightdistance ?c ?d)
-;         )
-;     :effect (and 
-;         (peeled ?a)
-;         (not(partpeeled ?a))
-;     )
-; )
 (:action rotate
     :parameters (?a - vegetable ?b - clamp ?c - movjaw ?d - statjaw)
     :precondition (and 
