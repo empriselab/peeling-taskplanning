@@ -122,7 +122,7 @@
         (not(rightdistance ?c ?d))
         )
 )
-(:action partpeeling ;making progress, partially peeling the vegetable
+(:action peeling ;making progress, partially peeling the vegetable
     :parameters (?a - vegetable ?b - peeler ?c - movjaw ?d - statjaw ?e - clamp)
     :precondition (and 
         (not(peeled ?a))
@@ -137,28 +137,28 @@
         )
     :effect (and
         (toppeeled ?a)
-        (partpeeled ?a)
+        (oneof (and) (peeled ?a))
     )
 )
-(:action comppeeling ;completely peeling the vegetable
-    :parameters (?a - vegetable ?b - peeler ?c - movjaw ?d - statjaw ?e - clamp)
-    :precondition (and 
-        (not(peeled ?a))
-        (not(toppeeled ?a))
-        (partpeeled ?a)
-        (holding ?b)
-        (locked ?e)
-        (between ?a ?c ?d)
+; (:action comppeeling ;completely peeling the vegetable
+;     :parameters (?a - vegetable ?b - peeler ?c - movjaw ?d - statjaw ?e - clamp)
+;     :precondition (and 
+;         (not(peeled ?a))
+;         (not(toppeeled ?a))
+;         (partpeeled ?a)
+;         (holding ?b)
+;         (locked ?e)
+;         (between ?a ?c ?d)
         
-        (not(toofar ?c ?d))
-        (not(tooclose ?c ?d))
-        (rightdistance ?c ?d)
-        )
-    :effect (and 
-        (peeled ?a)
-        (not(partpeeled ?a))
-    )
-)
+;         (not(toofar ?c ?d))
+;         (not(tooclose ?c ?d))
+;         (rightdistance ?c ?d)
+;         )
+;     :effect (and 
+;         (peeled ?a)
+;         (not(partpeeled ?a))
+;     )
+; )
 (:action rotate
     :parameters (?a - vegetable ?b - clamp ?c - movjaw ?d - statjaw)
     :precondition (and 
