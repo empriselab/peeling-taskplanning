@@ -19,6 +19,7 @@ GitHub Repo: https://github.com/AI-Planning/planutils
 
 ### PRP
 GitHub Repo: https://github.com/QuMuLab/planner-for-relevant-policies
+
 The _translator.py_ file is a copy of planner-for-relevant-policies/prp-scripts/translate_policy.py 
 with a few minor changes so that the output is printed in the _readable_output.txt_ file.
 
