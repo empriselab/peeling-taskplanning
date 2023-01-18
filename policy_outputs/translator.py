@@ -1,5 +1,8 @@
 
-import re, pprint
+import re, pprint, sys
+
+filepath = "readable_output.txt"
+sys.stdout = open(filepath, "w")
 
 def read_file(file_name):
     """Return a list of the lines of a file."""
