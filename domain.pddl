@@ -1,6 +1,8 @@
 ;; This is the domain of a world where a robot arm picks up a given object, 
 ;; peels it using a designated commersial peeler and puts it back down.
 
+;;;;;make sure that my code in readable (variable name and comments)
+
 (define (domain emprise)
 
 
@@ -13,20 +15,23 @@
 )
 
 
-(:predicates
+(:predicates ; more descriptive (can be understood when read): reference the comments...
     (ontable ?a - object);peeler/vegetable is on table
     ; robot arm related
     (holding ?a - object);gripper is holding object
     (handempty);gripper is not holding anything
     ; cuttingboard related
     (locked ?a - handle);handle is locked
+    ;handlelocked
     (between ?a - vegetable ?b - movjaw ?c - statjaw) ;vegetable is between two jaws (can be ontable or not)
+    ;food_between_jaw...
     (toofar ?a - movjaw ?b - statjaw) ;the two jaws are too far from eachother
     (tooclose ?a - movjaw ?b - statjaw) ; the jaws are too close to eachother
     (rightdistance ?a - movjaw ?b - statjaw) ; the distance between the jaws is the width of vegetable
     ; peeling
     (toppeeled ?a - vegetable);vegetable is peeled on top (partially peeled)
     (peeled ?a - vegetable);vegetable is fully peeled (not peeled implies partpeeled or not peeled at all)
+    ;fully peeled
 )
 
 
