@@ -42,7 +42,7 @@ def get_lines(file_name, lower_bound = None, upper_bound = None):
     return toReturn
 
 index = 0
-var_lines = get_lines('output', lower_bound = 'end_metric', upper_bound = 'begin_state')
+var_lines = get_lines('output.sas', lower_bound = 'end_metric', upper_bound = 'begin_state')
 
 num_vars = int(var_lines[index])
 index += 1
