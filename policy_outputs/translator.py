@@ -1,4 +1,8 @@
-
+"""
+Imported from 
+"https://raw.githubusercontent.com/QuMuLab/planner-for-relevant-policies/py3/prp-scripts/translate_policy.py"
+with minor edits. Citation seen on the README page.
+"""
 import re, pprint, sys
 
 filepath = "readable_output.txt"
