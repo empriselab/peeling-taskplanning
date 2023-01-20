@@ -1,67 +1,67 @@
 Mapping:
 
-  var0:0	<-> 	 between(food_item, moving_jaw, stationary_jaw)
-  var0:1	<-> 	 not(between(food_item, moving_jaw, stationary_jaw))
+  var0:0	<-> 	 fullypeeled(food_item)
+  var0:1	<-> 	 not(fullypeeled(food_item))
   var1:0	<-> 	 handempty()
   var1:1	<-> 	 holding(food_item)
   var1:2	<-> 	 holding(food_peeler)
-  var2:0	<-> 	 locked(vice_handle)
-  var2:1	<-> 	 not(locked(vice_handle))
-  var3:0	<-> 	 ontable(food_item)
-  var3:1	<-> 	 not(ontable(food_item))
-  var4:0	<-> 	 ontable(food_peeler)
-  var4:1	<-> 	 not(ontable(food_peeler))
-  var5:0	<-> 	 peeled(food_item)
-  var5:1	<-> 	 not(peeled(food_item))
-  var6:0	<-> 	 rightdistance(moving_jaw, stationary_jaw)
-  var6:1	<-> 	 tooclose(moving_jaw, stationary_jaw)
-  var6:2	<-> 	 toofar(moving_jaw, stationary_jaw)
+  var2:0	<-> 	 isbetween(food_item, moving_jaw, stationary_jaw)
+  var2:1	<-> 	 not(isbetween(food_item, moving_jaw, stationary_jaw))
+  var3:0	<-> 	 islocked(vice_handle)
+  var3:1	<-> 	 not(islocked(vice_handle))
+  var4:0	<-> 	 jawsarerightdistance(moving_jaw, stationary_jaw)
+  var4:1	<-> 	 jawsaretooclose(moving_jaw, stationary_jaw)
+  var4:2	<-> 	 jawsaretoofar(moving_jaw, stationary_jaw)
+  var5:0	<-> 	 ontable(food_item)
+  var5:1	<-> 	 not(ontable(food_item))
+  var6:0	<-> 	 ontable(food_peeler)
+  var6:1	<-> 	 not(ontable(food_peeler))
   var7:0	<-> 	 toppeeled(food_item)
   var7:1	<-> 	 not(toppeeled(food_item))
 
 Policy:
 
-If holds: ontable(food_item)/peeled(food_item)
+If holds: ontable(food_item)/fullypeeled(food_item)
 Execute: goal / SC / d=0
 
-If holds: not(ontable(food_peeler))/holding(food_peeler)/ontable(food_item)/locked(vice_handle)/between(food_item, moving_jaw, stationary_jaw)/rightdistance(moving_jaw, stationary_jaw)/not(toppeeled(food_item))/not(peeled(food_item))
-Execute: peeling food_item food_peeler moving_jaw stationary_jaw vice_handle / SC / d=1
+If holds: not(ontable(food_peeler))/holding(food_peeler)/ontable(food_item)/islocked(vice_handle)/isbetween(food_item, moving_jaw, stationary_jaw)/jawsarerightdistance(moving_jaw, stationary_jaw)/not(toppeeled(food_item))/not(fullypeeled(food_item))
+Execute: peel food_item food_peeler moving_jaw stationary_jaw vice_handle / SC / d=1
 
-If holds: ontable(food_peeler)/handempty()/ontable(food_item)/locked(vice_handle)/between(food_item, moving_jaw, stationary_jaw)/rightdistance(moving_jaw, stationary_jaw)/not(toppeeled(food_item))/not(peeled(food_item))
+If holds: ontable(food_peeler)/handempty()/ontable(food_item)/islocked(vice_handle)/isbetween(food_item, moving_jaw, stationary_jaw)/jawsarerightdistance(moving_jaw, stationary_jaw)/not(toppeeled(food_item))/not(fullypeeled(food_item))
 Execute: pickup food_peeler / SC / d=2
 
-If holds: ontable(food_peeler)/handempty()/ontable(food_item)/not(locked(vice_handle))/between(food_item, moving_jaw, stationary_jaw)/rightdistance(moving_jaw, stationary_jaw)/not(toppeeled(food_item))/not(peeled(food_item))
+If holds: ontable(food_peeler)/handempty()/ontable(food_item)/not(islocked(vice_handle))/isbetween(food_item, moving_jaw, stationary_jaw)/jawsarerightdistance(moving_jaw, stationary_jaw)/not(toppeeled(food_item))/not(fullypeeled(food_item))
 Execute: lock vice_handle / SC / d=3
 
-If holds: ontable(food_peeler)/handempty()/ontable(food_item)/not(locked(vice_handle))/between(food_item, moving_jaw, stationary_jaw)/toofar(moving_jaw, stationary_jaw)/not(toppeeled(food_item))/not(peeled(food_item))
-Execute: slidein vice_handle food_item moving_jaw stationary_jaw / SC / d=4
+If holds: ontable(food_peeler)/handempty()/ontable(food_item)/not(islocked(vice_handle))/isbetween(food_item, moving_jaw, stationary_jaw)/jawsaretoofar(moving_jaw, stationary_jaw)/not(toppeeled(food_item))/not(fullypeeled(food_item))
+Execute: slideinmovingjaw vice_handle food_item moving_jaw stationary_jaw / SC / d=4
 
-If holds: ontable(food_peeler)/holding(food_item)/not(ontable(food_item))/not(locked(vice_handle))/between(food_item, moving_jaw, stationary_jaw)/toofar(moving_jaw, stationary_jaw)/not(toppeeled(food_item))/not(peeled(food_item))
+If holds: ontable(food_peeler)/holding(food_item)/not(ontable(food_item))/not(islocked(vice_handle))/isbetween(food_item, moving_jaw, stationary_jaw)/jawsaretoofar(moving_jaw, stationary_jaw)/not(toppeeled(food_item))/not(fullypeeled(food_item))
 Execute: putdown food_item / SC / d=5
 
-If holds: ontable(food_peeler)/handempty()/ontable(food_item)/not(locked(vice_handle))/between(food_item, moving_jaw, stationary_jaw)/rightdistance(moving_jaw, stationary_jaw)/toppeeled(food_item)/not(peeled(food_item))
-Execute: rotate1 food_item vice_handle moving_jaw stationary_jaw / SC / d=5
+If holds: ontable(food_peeler)/handempty()/ontable(food_item)/not(islocked(vice_handle))/isbetween(food_item, moving_jaw, stationary_jaw)/jawsarerightdistance(moving_jaw, stationary_jaw)/toppeeled(food_item)/not(fullypeeled(food_item))
+Execute: rotate food_item vice_handle moving_jaw stationary_jaw / SC / d=5
 
-If holds: ontable(food_peeler)/holding(food_item)/not(ontable(food_item))/not(locked(vice_handle))/not(between(food_item, moving_jaw, stationary_jaw))/toofar(moving_jaw, stationary_jaw)/not(toppeeled(food_item))/not(peeled(food_item))
-Execute: movetoward2 food_item moving_jaw stationary_jaw / SC / d=6
+If holds: ontable(food_peeler)/holding(food_item)/not(ontable(food_item))/not(islocked(vice_handle))/not(isbetween(food_item, moving_jaw, stationary_jaw))/jawsaretoofar(moving_jaw, stationary_jaw)/not(toppeeled(food_item))/not(fullypeeled(food_item))
+Execute: movetojaws2 food_item moving_jaw stationary_jaw / SC / d=6
 
-If holds: ontable(food_peeler)/handempty()/ontable(food_item)/locked(vice_handle)/between(food_item, moving_jaw, stationary_jaw)/rightdistance(moving_jaw, stationary_jaw)/toppeeled(food_item)/not(peeled(food_item))
+If holds: ontable(food_peeler)/handempty()/ontable(food_item)/islocked(vice_handle)/isbetween(food_item, moving_jaw, stationary_jaw)/jawsarerightdistance(moving_jaw, stationary_jaw)/toppeeled(food_item)/not(fullypeeled(food_item))
 Execute: unlock vice_handle / SC / d=6
 
-If holds: ontable(food_peeler)/handempty()/ontable(food_item)/not(locked(vice_handle))/not(between(food_item, moving_jaw, stationary_jaw))/toofar(moving_jaw, stationary_jaw)/not(toppeeled(food_item))/not(peeled(food_item))
+If holds: ontable(food_peeler)/handempty()/ontable(food_item)/not(islocked(vice_handle))/not(isbetween(food_item, moving_jaw, stationary_jaw))/jawsaretoofar(moving_jaw, stationary_jaw)/not(toppeeled(food_item))/not(fullypeeled(food_item))
 Execute: pickup food_item / SC / d=7
 
-If holds: not(ontable(food_peeler))/holding(food_peeler)/ontable(food_item)/locked(vice_handle)/between(food_item, moving_jaw, stationary_jaw)/rightdistance(moving_jaw, stationary_jaw)/toppeeled(food_item)/not(peeled(food_item))
+If holds: not(ontable(food_peeler))/holding(food_peeler)/ontable(food_item)/islocked(vice_handle)/isbetween(food_item, moving_jaw, stationary_jaw)/jawsarerightdistance(moving_jaw, stationary_jaw)/toppeeled(food_item)/not(fullypeeled(food_item))
 Execute: putdown food_peeler / SC / d=7
 
-If holds: ontable(food_peeler)/handempty()/ontable(food_item)/not(locked(vice_handle))/not(between(food_item, moving_jaw, stationary_jaw))/tooclose(moving_jaw, stationary_jaw)/not(toppeeled(food_item))/not(peeled(food_item))
-Execute: slideout1 vice_handle food_item moving_jaw stationary_jaw / SC / d=8
+If holds: ontable(food_peeler)/handempty()/ontable(food_item)/not(islocked(vice_handle))/not(isbetween(food_item, moving_jaw, stationary_jaw))/jawsaretooclose(moving_jaw, stationary_jaw)/not(toppeeled(food_item))/not(fullypeeled(food_item))
+Execute: slideoutmovingjaw1 vice_handle food_item moving_jaw stationary_jaw / SC / d=8
 
-If holds: ontable(food_peeler)/handempty()/ontable(food_item)/locked(vice_handle)/not(between(food_item, moving_jaw, stationary_jaw))/tooclose(moving_jaw, stationary_jaw)/not(toppeeled(food_item))/not(peeled(food_item))
+If holds: ontable(food_peeler)/handempty()/ontable(food_item)/islocked(vice_handle)/not(isbetween(food_item, moving_jaw, stationary_jaw))/jawsaretooclose(moving_jaw, stationary_jaw)/not(toppeeled(food_item))/not(fullypeeled(food_item))
 Execute: unlock vice_handle / SC / d=9
 
-If holds: holding(food_peeler)/ontable(food_item)/locked(vice_handle)/between(food_item, moving_jaw, stationary_jaw)/rightdistance(moving_jaw, stationary_jaw)/not(toppeeled(food_item))/not(peeled(food_item))
-Execute: peeling food_item food_peeler moving_jaw stationary_jaw vice_handle / NSC / d=1
+If holds: holding(food_peeler)/ontable(food_item)/islocked(vice_handle)/isbetween(food_item, moving_jaw, stationary_jaw)/jawsarerightdistance(moving_jaw, stationary_jaw)/not(toppeeled(food_item))/not(fullypeeled(food_item))
+Execute: peel food_item food_peeler moving_jaw stationary_jaw vice_handle / NSC / d=1
 
 FSAP:
 

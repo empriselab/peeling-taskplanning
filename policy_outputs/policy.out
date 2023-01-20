@@ -1,42 +1,42 @@
 
-If holds: var3:0 var5:0
+If holds: var5:0 var0:0
 Execute: goal / SC / d=0
 
-If holds: var4:1 var1:2 var3:0 var2:0 var0:0 var6:0 var7:1 var5:1
-Execute: peeling food_item food_peeler moving_jaw stationary_jaw vice_handle / SC / d=1
+If holds: var6:1 var1:2 var5:0 var3:0 var2:0 var4:0 var7:1 var0:1
+Execute: peel food_item food_peeler moving_jaw stationary_jaw vice_handle / SC / d=1
 
-If holds: var4:0 var1:0 var3:0 var2:0 var0:0 var6:0 var7:1 var5:1
+If holds: var6:0 var1:0 var5:0 var3:0 var2:0 var4:0 var7:1 var0:1
 Execute: pickup food_peeler / SC / d=2
 
-If holds: var4:0 var1:0 var3:0 var2:1 var0:0 var6:0 var7:1 var5:1
+If holds: var6:0 var1:0 var5:0 var3:1 var2:0 var4:0 var7:1 var0:1
 Execute: lock vice_handle / SC / d=3
 
-If holds: var4:0 var1:0 var3:0 var2:1 var0:0 var6:2 var7:1 var5:1
-Execute: slidein vice_handle food_item moving_jaw stationary_jaw / SC / d=4
+If holds: var6:0 var1:0 var5:0 var3:1 var2:0 var4:2 var7:1 var0:1
+Execute: slideinmovingjaw vice_handle food_item moving_jaw stationary_jaw / SC / d=4
 
-If holds: var4:0 var1:1 var3:1 var2:1 var0:0 var6:2 var7:1 var5:1
+If holds: var6:0 var1:1 var5:1 var3:1 var2:0 var4:2 var7:1 var0:1
 Execute: putdown food_item / SC / d=5
 
-If holds: var4:0 var1:0 var3:0 var2:1 var0:0 var6:0 var7:0 var5:1
-Execute: rotate1 food_item vice_handle moving_jaw stationary_jaw / SC / d=5
+If holds: var6:0 var1:0 var5:0 var3:1 var2:0 var4:0 var7:0 var0:1
+Execute: rotate food_item vice_handle moving_jaw stationary_jaw / SC / d=5
 
-If holds: var4:0 var1:1 var3:1 var2:1 var0:1 var6:2 var7:1 var5:1
-Execute: movetoward2 food_item moving_jaw stationary_jaw / SC / d=6
+If holds: var6:0 var1:1 var5:1 var3:1 var2:1 var4:2 var7:1 var0:1
+Execute: movetojaws2 food_item moving_jaw stationary_jaw / SC / d=6
 
-If holds: var4:0 var1:0 var3:0 var2:0 var0:0 var6:0 var7:0 var5:1
+If holds: var6:0 var1:0 var5:0 var3:0 var2:0 var4:0 var7:0 var0:1
 Execute: unlock vice_handle / SC / d=6
 
-If holds: var4:0 var1:0 var3:0 var2:1 var0:1 var6:2 var7:1 var5:1
+If holds: var6:0 var1:0 var5:0 var3:1 var2:1 var4:2 var7:1 var0:1
 Execute: pickup food_item / SC / d=7
 
-If holds: var4:1 var1:2 var3:0 var2:0 var0:0 var6:0 var7:0 var5:1
+If holds: var6:1 var1:2 var5:0 var3:0 var2:0 var4:0 var7:0 var0:1
 Execute: putdown food_peeler / SC / d=7
 
-If holds: var4:0 var1:0 var3:0 var2:1 var0:1 var6:1 var7:1 var5:1
-Execute: slideout1 vice_handle food_item moving_jaw stationary_jaw / SC / d=8
+If holds: var6:0 var1:0 var5:0 var3:1 var2:1 var4:1 var7:1 var0:1
+Execute: slideoutmovingjaw1 vice_handle food_item moving_jaw stationary_jaw / SC / d=8
 
-If holds: var4:0 var1:0 var3:0 var2:0 var0:1 var6:1 var7:1 var5:1
+If holds: var6:0 var1:0 var5:0 var3:0 var2:1 var4:1 var7:1 var0:1
 Execute: unlock vice_handle / SC / d=9
 
-If holds: var1:2 var3:0 var2:0 var0:0 var6:0 var7:1 var5:1
-Execute: peeling food_item food_peeler moving_jaw stationary_jaw vice_handle / NSC / d=1
+If holds: var1:2 var5:0 var3:0 var2:0 var4:0 var7:1 var0:1
+Execute: peel food_item food_peeler moving_jaw stationary_jaw vice_handle / NSC / d=1
