@@ -2,34 +2,34 @@
 
 (:objects
     food_peeler - peeler
-    food_item - vegetable
+    food_item - food
     stationary_jaw - statjaw
     moving_jaw - movjaw
     vice_handle - handle
 )
 
 (:init
-    (ontable food_peeler)
-    (ontable food_item)
+    (OnTable food_peeler)
+    (OnTable food_item)
 
-    (handempty)
-    (not(holding food_item))
-    (not(holding food_peeler))
+    (HandEmpty)
+    (not(Holding food_item))
+    (not(Holding food_peeler))
 
-    (locked vice_handle)
-    (not(between food_item moving_jaw stationary_jaw))
-    (not(toofar moving_jaw stationary_jaw))
-    (not(rightdistance moving_jaw stationary_jaw))
-    (tooclose moving_jaw stationary_jaw)
+    (islocked vice_handle)
+    (not(IsBetween food_item moving_jaw stationary_jaw))
+    (not(JawsAreTooFar moving_jaw stationary_jaw))
+    (not(JawsAreRightDistance moving_jaw stationary_jaw))
+    (JawsAreTooClose moving_jaw stationary_jaw)
 
-    (not(toppeeled food_item))
-    (not(peeled food_item))
+    (not(TopPeeled food_item))
+    (not(FullyPeeled food_item))
 )
 
 
 (:goal (and
-    (ontable food_item)
+    (OnTable food_item)
 
-    (peeled food_item)
+    (FullyPeeled food_item)
 ))
 )

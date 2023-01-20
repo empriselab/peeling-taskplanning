@@ -1,165 +1,177 @@
 ;; This is the domain of a world where a robot arm picks up a given object, 
 ;; peels it using a designated commersial peeler and puts it back down.
 
-;;;;;make sure that my code in readable (variable name and comments)
-
 (define (domain emprise)
-
 
 (:requirements 
     :strips :typing :negative-preconditions :disjunctive-preconditions)
 
 (:types
     handle movjaw statjaw - object ;assumes board is apart of table
-    peeler vegetable - object ; assuming fruits are vegetables too
+    peeler food - object ; assumes fruits are vegetables too
 )
 
-
-(:predicates ; more descriptive (can be understood when read): reference the comments...
-    (ontable ?a - object);peeler/vegetable is on table
-    ; robot arm related
-    (holding ?a - object);gripper is holding object
-    (handempty);gripper is not holding anything
+(:predicates
+    (OnTable ?a - object);peeler/food is on table
+    (Holding ?a - object);gripper is Holding object
+    (HandEmpty);gripper is not Holding anything
+    
     ; cuttingboard related
-    (locked ?a - handle);handle is locked
-    ;handlelocked
-    (between ?a - vegetable ?b - movjaw ?c - statjaw) ;vegetable is between two jaws (can be ontable or not)
-    ;food_between_jaw...
-    (toofar ?a - movjaw ?b - statjaw) ;the two jaws are too far from eachother
-    (tooclose ?a - movjaw ?b - statjaw) ; the jaws are too close to eachother
-    (rightdistance ?a - movjaw ?b - statjaw) ; the distance between the jaws is the width of vegetable
+    (IsLocked ?a - handle);handle is locked
+    (IsBetween ?a - food ?b - movjaw ?c - statjaw) ;food is IsBetween two jaws (can be OnTable or not)
+    (JawsAreTooFar ?a - movjaw ?b - statjaw) ;the two jaws are too far from eachother
+    (JawsAreTooClose ?a - movjaw ?b - statjaw) ; the jaws are too close to eachother
+    (JawsAreRightDistance ?a - movjaw ?b - statjaw) ; the distance IsBetween the jaws is the width of food
+    
     ; peeling
-    (toppeeled ?a - vegetable);vegetable is peeled on top (partially peeled)
-    (peeled ?a - vegetable);vegetable is fully peeled (not peeled implies partpeeled or not peeled at all)
-    ;fully peeled
+    (TopPeeled ?a - food);food is peeled on top (partially peeled)
+    (FullyPeeled ?a - food);food is fully peeled
 )
 
-
-(:action pickup ; to pick up from table
+(:action PickUp 
+    ; to pick up an object from table
     :parameters (?a - object)
     :precondition (and 
-        (handempty)
-        (not(holding ?a))
-        (ontable ?a)
+        (HandEmpty)
+        (not(Holding ?a))
+        (OnTable ?a)
     )
     :effect (and
-        (holding ?a)
-        (not (handempty))
-        (not (ontable ?a))
+        (Holding ?a)
+        (not (HandEmpty))
+        (not (OnTable ?a))
     ) 
 )
-(:action putdown
+(:action PutDown
+    ; to put the object down onto the table
     :parameters (?a - object)
     :precondition (and 
-        (holding ?a)
-        (not(ontable ?a))
+        (Holding ?a)
+        (not(OnTable ?a))
     )
     :effect (and 
-        (ontable ?a)
-        (not(holding ?a))
-        (handempty)
+        (OnTable ?a)
+        (not(Holding ?a))
+        (HandEmpty)
     )
 )
-(:action movetoward ;to move toward the jaws (important for vegetable)
-    :parameters (?a - vegetable ?b - movjaw ?c - statjaw)
+(:action MoveToJaws 
+    ; to move the food item toward the jaws so that it is 
+    ; between the stationary and moving jaws
+    :parameters (?a - food ?b - movjaw ?c - statjaw)
     :precondition (and 
-        (holding ?a)
-        (not(ontable ?a))
-        (not(handempty))
-        (not(between ?a ?b ?c))
-        (not(tooclose ?b ?c))
-        (or(rightdistance ?b ?c)(toofar ?b ?c))
+        (Holding ?a)
+        (not(OnTable ?a))
+        (not(HandEmpty))
+        (not(IsBetween ?a ?b ?c))
+        (not(JawsAreTooClose ?b ?c))
+        (or(JawsAreRightDistance ?b ?c)(JawsAreTooFar ?b ?c))
     )
-    :effect (between ?a ?b ?c)
+    :effect (IsBetween ?a ?b ?c)
 )
-(:action moveaway ;to move away from the jaws (important for vegetable)
-    :parameters (?a - vegetable ?b - movjaw ?c - statjaw)
+(:action MoveFromJaws 
+    ; to move the food item away from the jaws
+    :parameters (?a - food ?b - movjaw ?c - statjaw)
     :precondition (and 
-        (holding ?a)
-        (not(handempty))
-        (between ?a ?b ?c)
+        (Holding ?a)
+        (not(HandEmpty))
+        (IsBetween ?a ?b ?c)
     )
-    :effect (not(between ?a ?b ?c))
+    :effect (not(IsBetween ?a ?b ?c))
 )
-(:action lock ;to lock the handle
+(:action Lock 
+    ;to lock the vice handle
     :parameters (?a - handle)
     :precondition (and
-        (handempty)
-        (not(locked ?a))
+        (HandEmpty)
+        (not(IsLocked ?a))
     )
-    :effect (locked ?a)
+    :effect (IsLocked ?a)
 )
-(:action unlock ;to unlock the handle
+(:action Unlock 
+    ;to unlock the vice handle
     :parameters (?a - handle)
     :precondition (and 
-        (handempty)
-        (locked ?a)
+        (HandEmpty)
+        (IsLocked ?a)
     )
-    :effect (not (locked ?a))
+    :effect (not (IsLocked ?a))
 )
-(:action slidein ;to slide in the moving jaw
-    :parameters (?a - handle ?b - vegetable ?c - movjaw ?d - statjaw)
+(:action SlideInMovingJaw 
+    ; to slide in the moving jaw so that the distance between the jaws
+    ; is just right to secure the food item
+    :parameters (?a - handle ?b - food ?c - movjaw ?d - statjaw)
     :precondition (and
-        (not (locked ?a))
+        (not (IsLocked ?a))
         
-        (toofar ?c ?d)
-        (not (tooclose ?c ?d))
-        (not (rightdistance ?c ?d))
+        (JawsAreTooFar ?c ?d)
+        (not (JawsAreTooClose ?c ?d))
+        (not (JawsAreRightDistance ?c ?d))
 
-        (between ?b ?c ?d)
+        (IsBetween ?b ?c ?d)
     )
     :effect (and
-        (not(toofar ?c ?d))
-        (rightdistance ?c ?d)
+        (not(JawsAreTooFar ?c ?d))
+        (JawsAreRightDistance ?c ?d)
     )
 )
-(:action slideout ;to slide out the moving jaw
-    :parameters (?a - handle ?b - vegetable ?c - movjaw ?d - statjaw)
+(:action SlideOutMovingJaw 
+    ; to slide out the moving jaw so that the food item can be moved
+    :parameters (?a - handle ?b - food ?c - movjaw ?d - statjaw)
     :precondition (and 
-        (not(locked ?a))
+        (not(IsLocked ?a))
         
-        (not(toofar ?c ?d)) ; too close or rightdistance
-        (or(tooclose ?c ?d) (rightdistance ?c ?d))
+        (not(JawsAreTooFar ?c ?d)) ; too close or JawsAreRightDistance
+        (or(JawsAreTooClose ?c ?d) (JawsAreRightDistance ?c ?d))
     )
     :effect (and
-        (toofar ?c ?d)
-        (not(tooclose ?c ?d))
-        (not(rightdistance ?c ?d))
+        (JawsAreTooFar ?c ?d)
+        (not(JawsAreTooClose ?c ?d))
+        (not(JawsAreRightDistance ?c ?d))
         )
 )
-(:action peeling ;making progress, partially peeling the vegetable
-    :parameters (?a - vegetable ?b - peeler ?c - movjaw ?d - statjaw ?e - handle)
+(:action Peel 
+    ; to peel the food item (non-deterministic)
+    ; depending on the global state, the effect can either be that the
+    ; 1) food item is not fully peeled (repeat the peeling process) or
+    ; 2) food item is fully peeled (stops peeling process and prceeds to next step)
+    :parameters (?a - food ?b - peeler ?c - movjaw ?d - statjaw ?e - handle)
     :precondition (and 
-        (not(peeled ?a))
-        (not(toppeeled ?a))
-        (holding ?b)
-        (locked ?e)
-        (between ?a ?c ?d)
+        (not(FullyPeeled ?a))
+        (not(TopPeeled ?a))
+        (Holding ?b)
+        (IsLocked ?e)
+        (IsBetween ?a ?c ?d)
         
-        (not(toofar ?c ?d))
-        (not(tooclose ?c ?d))
-        (rightdistance ?c ?d)
+        (not(JawsAreTooFar ?c ?d))
+        (not(JawsAreTooClose ?c ?d))
+        (JawsAreRightDistance ?c ?d)
         )
     :effect (and
-        (toppeeled ?a)
-        (oneof (not(peeled ?a)) (peeled ?a))
+        (TopPeeled ?a)
+        (oneof (not(FullyPeeled ?a)) (FullyPeeled ?a))
     )
 )
-(:action rotate
-    :parameters (?a - vegetable ?b - handle ?c - movjaw ?d - statjaw)
+(:action Rotate 
+    ; rotate the food item (non-deterministic)
+    ; depending on the global state, the effect can either be that the
+    ; 1) the jaws are too far apart (must adjust moving jaw position)
+    ; 2) the jaws are right distance apart (proceeds to next step)
+    :parameters (?a - food ?b - handle ?c - movjaw ?d - statjaw)
     :precondition (and 
-        (not (locked ?b))
-        (toppeeled ?a)
-        (handempty)
+        (not (IsLocked ?b))
+        (TopPeeled ?a)
+        (HandEmpty)
 
-        (not(tooclose ?c ?d))
-        (or(rightdistance ?c ?d) (toofar ?c ?d))
+        (not(JawsAreTooClose ?c ?d))
+        (or(JawsAreRightDistance ?c ?d) (JawsAreTooFar ?c ?d))
     )
     :effect (and 
-        (not (toppeeled ?a))
-        (toofar ?c ?d) ; assuming that I have to readjust vice everytime I rotate
-        (not(rightdistance ?c ?d))
+        (not (TopPeeled ?a))
+        (oneof
+            (and     (JawsAreTooFar ?c ?d)(not(JawsAreRightDistance ?c ?d)))
+            (and (not(JawsAreTooFar ?c ?d))   (JawsAreRightDistance ?c ?d))
+        )
     )
 )
-
 )
