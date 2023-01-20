@@ -11,6 +11,15 @@ file while the raw policy produced is the file _policy.out_. Using the
 translator _translator.py_, a human readable output file is created namedʼ
 _readable_output.txt_.
 
+In the domain and problem files, the naming convention of 
+the actions, predicates, and type/object names:
+* actions: SomeAction
+* predicates: SomePredicate
+* type names: sometype
+* object names: some_object
+
+Although in the output files, all letters are converted to lowercase
+
 ## Citation
 ### Planutils
 The planner PRP is installed/accessed through the Planutils library.
