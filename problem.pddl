@@ -22,6 +22,7 @@
     (not(JawsAreRightDistance moving_jaw stationary_jaw))
     (JawsAreTooClose moving_jaw stationary_jaw)
 
+    (not(OuterHalfPeeled food_item))
     (not(TopPeeled food_item))
     (not(FullyPeeled food_item))
 )
