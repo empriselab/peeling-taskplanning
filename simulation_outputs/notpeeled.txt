@@ -1,0 +1,112 @@
+Running the simulation...
+
+Expected operator:
+  unlock vice_handle (unlock vice_handle): [Atom handempty()] [Atom islocked(vice_handle) -> NegatedAtom islocked(vice_handle)]
+Chosen operator:
+  unlock vice_handle (unlock vice_handle): [Atom handempty()] [Atom islocked(vice_handle) -> NegatedAtom islocked(vice_handle)]
+
+Expected operator:
+  slideoutmovingjaw vice_handle food_item moving_jaw stationary_jaw (slideoutmovingjaw vice_handle food_item moving_jaw stationary_jaw): [NegatedAtom islocked(vice_handle)] [NegatedAtom jawsarerightdistance(moving_jaw, stationary_jaw)] [Atom jawsaretooclose(moving_jaw, stationary_jaw) -> NegatedAtom jawsaretooclose(moving_jaw, stationary_jaw)] [NegatedAtom jawsaretoofar(moving_jaw, stationary_jaw) -> Atom jawsaretoofar(moving_jaw, stationary_jaw)]
+Chosen operator:
+  slideoutmovingjaw vice_handle food_item moving_jaw stationary_jaw (slideoutmovingjaw vice_handle food_item moving_jaw stationary_jaw): [NegatedAtom islocked(vice_handle)] [NegatedAtom jawsarerightdistance(moving_jaw, stationary_jaw)] [Atom jawsaretooclose(moving_jaw, stationary_jaw) -> NegatedAtom jawsaretooclose(moving_jaw, stationary_jaw)] [NegatedAtom jawsaretoofar(moving_jaw, stationary_jaw) -> Atom jawsaretoofar(moving_jaw, stationary_jaw)]
+
+Expected operator:
+  pickup food_item (pickup food_item): [Atom handempty() -> Atom holding(food_item)] [Atom ontable(food_item) -> NegatedAtom ontable(food_item)]
+Chosen operator:
+  pickup food_item (pickup food_item): [Atom handempty() -> Atom holding(food_item)] [Atom ontable(food_item) -> NegatedAtom ontable(food_item)]
+
+Expected operator:
+  movetojaws food_item moving_jaw stationary_jaw (movetojaws food_item moving_jaw stationary_jaw): [Atom holding(food_item)] [NegatedAtom jawsaretooclose(moving_jaw, stationary_jaw)] [NegatedAtom ontable(food_item)] [NegatedAtom isbetween(food_item, moving_jaw, stationary_jaw) -> Atom isbetween(food_item, moving_jaw, stationary_jaw)]
+Chosen operator:
+  movetojaws food_item moving_jaw stationary_jaw (movetojaws food_item moving_jaw stationary_jaw): [Atom holding(food_item)] [NegatedAtom jawsaretooclose(moving_jaw, stationary_jaw)] [NegatedAtom ontable(food_item)] [NegatedAtom isbetween(food_item, moving_jaw, stationary_jaw) -> Atom isbetween(food_item, moving_jaw, stationary_jaw)]
+
+Expected operator:
+  putdown food_item (putdown food_item): [Atom holding(food_item) -> Atom handempty()] [NegatedAtom ontable(food_item) -> Atom ontable(food_item)]
+Chosen operator:
+  putdown food_item (putdown food_item): [Atom holding(food_item) -> Atom handempty()] [NegatedAtom ontable(food_item) -> Atom ontable(food_item)]
+
+Expected operator:
+  slideinmovingjaw vice_handle food_item moving_jaw stationary_jaw (slideinmovingjaw vice_handle food_item moving_jaw stationary_jaw): [Atom isbetween(food_item, moving_jaw, stationary_jaw)] [NegatedAtom islocked(vice_handle)] [NegatedAtom jawsaretooclose(moving_jaw, stationary_jaw)] [NegatedAtom jawsarerightdistance(moving_jaw, stationary_jaw) -> Atom jawsarerightdistance(moving_jaw, stationary_jaw)] [Atom jawsaretoofar(moving_jaw, stationary_jaw) -> NegatedAtom jawsaretoofar(moving_jaw, stationary_jaw)]
+Chosen operator:
+  slideinmovingjaw vice_handle food_item moving_jaw stationary_jaw (slideinmovingjaw vice_handle food_item moving_jaw stationary_jaw): [Atom isbetween(food_item, moving_jaw, stationary_jaw)] [NegatedAtom islocked(vice_handle)] [NegatedAtom jawsaretooclose(moving_jaw, stationary_jaw)] [NegatedAtom jawsarerightdistance(moving_jaw, stationary_jaw) -> Atom jawsarerightdistance(moving_jaw, stationary_jaw)] [Atom jawsaretoofar(moving_jaw, stationary_jaw) -> NegatedAtom jawsaretoofar(moving_jaw, stationary_jaw)]
+
+Expected operator:
+  lock vice_handle (lock vice_handle): [Atom handempty()] [NegatedAtom islocked(vice_handle) -> Atom islocked(vice_handle)]
+Chosen operator:
+  lock vice_handle (lock vice_handle): [Atom handempty()] [NegatedAtom islocked(vice_handle) -> Atom islocked(vice_handle)]
+
+Expected operator:
+  pickup food_peeler (pickup food_peeler): [Atom handempty() -> Atom holding(food_peeler)] [Atom ontable(food_peeler) -> NegatedAtom ontable(food_peeler)]
+Chosen operator:
+  pickup food_peeler (pickup food_peeler): [Atom handempty() -> Atom holding(food_peeler)] [Atom ontable(food_peeler) -> NegatedAtom ontable(food_peeler)]
+
+Expected operator:
+  peel_DETDUP_0 food_item food_peeler moving_jaw stationary_jaw vice_handle (peel food_item food_peeler moving_jaw stationary_jaw vice_handle): [Atom holding(food_peeler)] [Atom isbetween(food_item, moving_jaw, stationary_jaw)] [Atom islocked(vice_handle)] [Atom jawsarerightdistance(moving_jaw, stationary_jaw)] [NegatedAtom jawsaretooclose(moving_jaw, stationary_jaw)] [NegatedAtom jawsaretoofar(moving_jaw, stationary_jaw)] [NegatedAtom outerhalfpeeled(food_item) -> Atom outerhalfpeeled(food_item)] [NegatedAtom toppeeled(food_item) -> Atom toppeeled(food_item)]
+Chosen operator:
+  peel_DETDUP_1 food_item food_peeler moving_jaw stationary_jaw vice_handle (peel food_item food_peeler moving_jaw stationary_jaw vice_handle): [Atom holding(food_peeler)] [Atom isbetween(food_item, moving_jaw, stationary_jaw)] [Atom islocked(vice_handle)] [Atom jawsarerightdistance(moving_jaw, stationary_jaw)] [NegatedAtom jawsaretooclose(moving_jaw, stationary_jaw)] [NegatedAtom jawsaretoofar(moving_jaw, stationary_jaw)] [NegatedAtom outerhalfpeeled(food_item)] [NegatedAtom toppeeled(food_item) -> Atom toppeeled(food_item)]
+
+Expected operator:
+  putdown food_peeler (putdown food_peeler): [Atom holding(food_peeler) -> Atom handempty()] [NegatedAtom ontable(food_peeler) -> Atom ontable(food_peeler)]
+Chosen operator:
+  putdown food_peeler (putdown food_peeler): [Atom holding(food_peeler) -> Atom handempty()] [NegatedAtom ontable(food_peeler) -> Atom ontable(food_peeler)]
+
+Expected operator:
+  unlock vice_handle (unlock vice_handle): [Atom handempty()] [Atom islocked(vice_handle) -> NegatedAtom islocked(vice_handle)]
+Chosen operator:
+  unlock vice_handle (unlock vice_handle): [Atom handempty()] [Atom islocked(vice_handle) -> NegatedAtom islocked(vice_handle)]
+
+Expected operator:
+  rotate_DETDUP_0 food_item vice_handle moving_jaw stationary_jaw (rotate food_item vice_handle moving_jaw stationary_jaw): [Atom handempty()] [NegatedAtom islocked(vice_handle)] [NegatedAtom jawsaretooclose(moving_jaw, stationary_jaw)] [NegatedAtom outerhalfpeeled(food_item)] [anything -> NegatedAtom jawsarerightdistance(moving_jaw, stationary_jaw)] [anything -> Atom jawsaretoofar(moving_jaw, stationary_jaw)] [Atom toppeeled(food_item) -> NegatedAtom toppeeled(food_item)]
+Chosen operator:
+  rotate_DETDUP_1 food_item vice_handle moving_jaw stationary_jaw (rotate food_item vice_handle moving_jaw stationary_jaw): [Atom handempty()] [NegatedAtom islocked(vice_handle)] [NegatedAtom jawsaretooclose(moving_jaw, stationary_jaw)] [NegatedAtom outerhalfpeeled(food_item)] [anything -> Atom jawsarerightdistance(moving_jaw, stationary_jaw)] [anything -> NegatedAtom jawsaretoofar(moving_jaw, stationary_jaw)] [Atom toppeeled(food_item) -> NegatedAtom toppeeled(food_item)]
+
+Expected operator:
+  lock vice_handle (lock vice_handle): [Atom handempty()] [NegatedAtom islocked(vice_handle) -> Atom islocked(vice_handle)]
+Chosen operator:
+  lock vice_handle (lock vice_handle): [Atom handempty()] [NegatedAtom islocked(vice_handle) -> Atom islocked(vice_handle)]
+
+Expected operator:
+  pickup food_peeler (pickup food_peeler): [Atom handempty() -> Atom holding(food_peeler)] [Atom ontable(food_peeler) -> NegatedAtom ontable(food_peeler)]
+Chosen operator:
+  pickup food_peeler (pickup food_peeler): [Atom handempty() -> Atom holding(food_peeler)] [Atom ontable(food_peeler) -> NegatedAtom ontable(food_peeler)]
+
+Expected operator:
+  peel_DETDUP_0 food_item food_peeler moving_jaw stationary_jaw vice_handle (peel food_item food_peeler moving_jaw stationary_jaw vice_handle): [Atom holding(food_peeler)] [Atom isbetween(food_item, moving_jaw, stationary_jaw)] [Atom islocked(vice_handle)] [Atom jawsarerightdistance(moving_jaw, stationary_jaw)] [NegatedAtom jawsaretooclose(moving_jaw, stationary_jaw)] [NegatedAtom jawsaretoofar(moving_jaw, stationary_jaw)] [NegatedAtom outerhalfpeeled(food_item) -> Atom outerhalfpeeled(food_item)] [NegatedAtom toppeeled(food_item) -> Atom toppeeled(food_item)]
+Chosen operator:
+  peel_DETDUP_0 food_item food_peeler moving_jaw stationary_jaw vice_handle (peel food_item food_peeler moving_jaw stationary_jaw vice_handle): [Atom holding(food_peeler)] [Atom isbetween(food_item, moving_jaw, stationary_jaw)] [Atom islocked(vice_handle)] [Atom jawsarerightdistance(moving_jaw, stationary_jaw)] [NegatedAtom jawsaretooclose(moving_jaw, stationary_jaw)] [NegatedAtom jawsaretoofar(moving_jaw, stationary_jaw)] [NegatedAtom outerhalfpeeled(food_item) -> Atom outerhalfpeeled(food_item)] [NegatedAtom toppeeled(food_item) -> Atom toppeeled(food_item)]
+
+Expected operator:
+  putdown food_peeler (putdown food_peeler): [Atom holding(food_peeler) -> Atom handempty()] [NegatedAtom ontable(food_peeler) -> Atom ontable(food_peeler)]
+Chosen operator:
+  putdown food_peeler (putdown food_peeler): [Atom holding(food_peeler) -> Atom handempty()] [NegatedAtom ontable(food_peeler) -> Atom ontable(food_peeler)]
+
+Expected operator:
+  unlock vice_handle (unlock vice_handle): [Atom handempty()] [Atom islocked(vice_handle) -> NegatedAtom islocked(vice_handle)]
+Chosen operator:
+  unlock vice_handle (unlock vice_handle): [Atom handempty()] [Atom islocked(vice_handle) -> NegatedAtom islocked(vice_handle)]
+
+Expected operator:
+  flip_DETDUP_0 food_item vice_handle moving_jaw stationary_jaw (flip food_item vice_handle moving_jaw stationary_jaw): [Atom handempty()] [NegatedAtom islocked(vice_handle)] [NegatedAtom jawsaretooclose(moving_jaw, stationary_jaw)] [NegatedAtom innerhalfpeeled(food_item) -> Atom innerhalfpeeled(food_item)] [anything -> NegatedAtom jawsarerightdistance(moving_jaw, stationary_jaw)] [anything -> Atom jawsaretoofar(moving_jaw, stationary_jaw)] [Atom outerhalfpeeled(food_item) -> NegatedAtom outerhalfpeeled(food_item)] [Atom toppeeled(food_item) -> NegatedAtom toppeeled(food_item)]
+Chosen operator:
+  flip_DETDUP_0 food_item vice_handle moving_jaw stationary_jaw (flip food_item vice_handle moving_jaw stationary_jaw): [Atom handempty()] [NegatedAtom islocked(vice_handle)] [NegatedAtom jawsaretooclose(moving_jaw, stationary_jaw)] [NegatedAtom innerhalfpeeled(food_item) -> Atom innerhalfpeeled(food_item)] [anything -> NegatedAtom jawsarerightdistance(moving_jaw, stationary_jaw)] [anything -> Atom jawsaretoofar(moving_jaw, stationary_jaw)] [Atom outerhalfpeeled(food_item) -> NegatedAtom outerhalfpeeled(food_item)] [Atom toppeeled(food_item) -> NegatedAtom toppeeled(food_item)]
+
+Expected operator:
+  slideinmovingjaw vice_handle food_item moving_jaw stationary_jaw (slideinmovingjaw vice_handle food_item moving_jaw stationary_jaw): [Atom isbetween(food_item, moving_jaw, stationary_jaw)] [NegatedAtom islocked(vice_handle)] [NegatedAtom jawsaretooclose(moving_jaw, stationary_jaw)] [NegatedAtom jawsarerightdistance(moving_jaw, stationary_jaw) -> Atom jawsarerightdistance(moving_jaw, stationary_jaw)] [Atom jawsaretoofar(moving_jaw, stationary_jaw) -> NegatedAtom jawsaretoofar(moving_jaw, stationary_jaw)]
+Chosen operator:
+  slideinmovingjaw vice_handle food_item moving_jaw stationary_jaw (slideinmovingjaw vice_handle food_item moving_jaw stationary_jaw): [Atom isbetween(food_item, moving_jaw, stationary_jaw)] [NegatedAtom islocked(vice_handle)] [NegatedAtom jawsaretooclose(moving_jaw, stationary_jaw)] [NegatedAtom jawsarerightdistance(moving_jaw, stationary_jaw) -> Atom jawsarerightdistance(moving_jaw, stationary_jaw)] [Atom jawsaretoofar(moving_jaw, stationary_jaw) -> NegatedAtom jawsaretoofar(moving_jaw, stationary_jaw)]
+
+Expected operator:
+  lock vice_handle (lock vice_handle): [Atom handempty()] [NegatedAtom islocked(vice_handle) -> Atom islocked(vice_handle)]
+Chosen operator:
+  lock vice_handle (lock vice_handle): [Atom handempty()] [NegatedAtom islocked(vice_handle) -> Atom islocked(vice_handle)]
+
+Expected operator:
+  pickup food_peeler (pickup food_peeler): [Atom handempty() -> Atom holding(food_peeler)] [Atom ontable(food_peeler) -> NegatedAtom ontable(food_peeler)]
+Chosen operator:
+  pickup food_peeler (pickup food_peeler): [Atom handempty() -> Atom holding(food_peeler)] [Atom ontable(food_peeler) -> NegatedAtom ontable(food_peeler)]
+
+Expected operator:
+  peel_DETDUP_0 food_item food_peeler moving_jaw stationary_jaw vice_handle (peel food_item food_peeler moving_jaw stationary_jaw vice_handle): [Atom holding(food_peeler)] [Atom isbetween(food_item, moving_jaw, stationary_jaw)] [Atom islocked(vice_handle)] [Atom jawsarerightdistance(moving_jaw, stationary_jaw)] [NegatedAtom jawsaretooclose(moving_jaw, stationary_jaw)] [NegatedAtom jawsaretoofar(moving_jaw, stationary_jaw)] [NegatedAtom outerhalfpeeled(food_item) -> Atom outerhalfpeeled(food_item)] [NegatedAtom toppeeled(food_item) -> Atom toppeeled(food_item)]
+Chosen operator:
+  peel_DETDUP_0 food_item food_peeler moving_jaw stationary_jaw vice_handle (peel food_item food_peeler moving_jaw stationary_jaw vice_handle): [Atom holding(food_peeler)] [Atom isbetween(food_item, moving_jaw, stationary_jaw)] [Atom islocked(vice_handle)] [Atom jawsarerightdistance(moving_jaw, stationary_jaw)] [NegatedAtom jawsaretooclose(moving_jaw, stationary_jaw)] [NegatedAtom jawsaretoofar(moving_jaw, stationary_jaw)] [NegatedAtom outerhalfpeeled(food_item) -> Atom outerhalfpeeled(food_item)] [NegatedAtom toppeeled(food_item) -> Atom toppeeled(food_item)]
+...achieved the goal!
