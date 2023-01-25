@@ -9,8 +9,8 @@
     :strips :typing :negative-preconditions :disjunctive-preconditions)
 
 (:types
-    handle movjaw statjaw ;assumes board is apart of table
-    peeler food
+    handle movjaw statjaw - object;assumes board is apart of table
+    peeler food - pickupable
 )
 
 (:predicates
@@ -33,7 +33,7 @@
 
 (:action PickUp 
     ; to pick up an object from table
-    :parameters (?a - object)
+    :parameters (?a - pickupable)
     :precondition (and 
         (HandEmpty)
         (not(Holding ?a))
@@ -47,7 +47,7 @@
 )
 (:action PutDown
     ; to put the object down onto the table
-    :parameters (?a - object)
+    :parameters (?a - pickupable)
     :precondition (and 
         (not(HandEmpty))
         (Holding ?a)
@@ -159,7 +159,7 @@
         (TopPeeled ?a)
         (oneof 
             (and 
-                (not(OuterHalfPeeled ?a)) 
+                (not(OuterHalfPeeled ?a))
                 (not(FullyPeeled ?a))
             )
             (and
@@ -170,6 +170,7 @@
                 (OuterHalfPeeled ?a)
                 (FullyPeeled ?a)
             )
+        )
     )
 )
 (:action Rotate 

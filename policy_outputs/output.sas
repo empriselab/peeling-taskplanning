@@ -4,7 +4,7 @@ end_version
 begin_metric
 0
 end_metric
-8
+9
 begin_variable
 var0
 -1
@@ -60,6 +60,13 @@ begin_variable
 var7
 -1
 2
+Atom outerhalfpeeled(food_item)
+NegatedAtom outerhalfpeeled(food_item)
+end_variable
+begin_variable
+var8
+-1
+2
 Atom toppeeled(food_item)
 NegatedAtom toppeeled(food_item)
 end_variable
@@ -107,13 +114,112 @@ begin_state
 0
 0
 1
+1
 end_state
 begin_goal
-2
+4
 0 0
 5 0
+7 0
+8 0
 end_goal
-18
+27
+begin_operator
+flip_DETDUP_01 food_item vice_handle moving_jaw stationary_jaw
+3
+0 1
+1 0
+3 1
+3
+0 4 0 2
+0 7 0 1
+0 8 0 1
+0
+end_operator
+begin_operator
+flip_DETDUP_02 food_item vice_handle moving_jaw stationary_jaw
+4
+0 1
+1 0
+3 1
+4 2
+2
+0 7 0 1
+0 8 0 1
+0
+end_operator
+begin_operator
+flip_DETDUP_11 food_item vice_handle moving_jaw stationary_jaw
+4
+0 1
+1 0
+3 1
+8 0
+2
+0 4 0 2
+0 7 0 1
+0
+end_operator
+begin_operator
+flip_DETDUP_12 food_item vice_handle moving_jaw stationary_jaw
+5
+0 1
+1 0
+3 1
+4 2
+8 0
+1
+0 7 0 1
+0
+end_operator
+begin_operator
+flip_DETDUP_21 food_item vice_handle moving_jaw stationary_jaw
+4
+0 1
+1 0
+3 1
+4 0
+2
+0 7 0 1
+0 8 0 1
+0
+end_operator
+begin_operator
+flip_DETDUP_22 food_item vice_handle moving_jaw stationary_jaw
+3
+0 1
+1 0
+3 1
+3
+0 4 2 0
+0 7 0 1
+0 8 0 1
+0
+end_operator
+begin_operator
+flip_DETDUP_31 food_item vice_handle moving_jaw stationary_jaw
+5
+0 1
+1 0
+3 1
+4 0
+8 0
+1
+0 7 0 1
+0
+end_operator
+begin_operator
+flip_DETDUP_32 food_item vice_handle moving_jaw stationary_jaw
+4
+0 1
+1 0
+3 1
+8 0
+2
+0 4 2 0
+0 7 0 1
+0
+end_operator
 begin_operator
 lock vice_handle
 1
@@ -158,20 +264,35 @@ peel_DETDUP_0 food_item food_peeler moving_jaw stationary_jaw vice_handle
 2 0
 3 0
 4 0
-1
-0 7 1 0
+2
+0 7 -1 1
+0 8 1 0
 0
 end_operator
 begin_operator
 peel_DETDUP_1 food_item food_peeler moving_jaw stationary_jaw vice_handle
-4
+5
+0 1
 1 2
 2 0
 3 0
 4 0
 2
+0 7 -1 0
+0 8 1 0
+0
+end_operator
+begin_operator
+peel_DETDUP_2 food_item food_peeler moving_jaw stationary_jaw vice_handle
+4
+1 2
+2 0
+3 0
+4 0
+3
 0 0 1 0
-0 7 1 0
+0 7 -1 0
+0 8 1 0
 0
 end_operator
 begin_operator
@@ -208,42 +329,50 @@ putdown food_peeler
 end_operator
 begin_operator
 rotate_DETDUP_01 food_item vice_handle moving_jaw stationary_jaw
-2
+4
+0 1
 1 0
 3 1
+7 1
 2
 0 4 0 2
-0 7 0 1
+0 8 0 1
 0
 end_operator
 begin_operator
 rotate_DETDUP_02 food_item vice_handle moving_jaw stationary_jaw
-3
+5
+0 1
 1 0
 3 1
 4 2
+7 1
 1
-0 7 0 1
+0 8 0 1
 0
 end_operator
 begin_operator
 rotate_DETDUP_11 food_item vice_handle moving_jaw stationary_jaw
-3
+5
+0 1
 1 0
 3 1
 4 0
+7 1
 1
-0 7 0 1
+0 8 0 1
 0
 end_operator
 begin_operator
 rotate_DETDUP_12 food_item vice_handle moving_jaw stationary_jaw
-2
+4
+0 1
 1 0
 3 1
+7 1
 2
 0 4 2 0
-0 7 0 1
+0 8 0 1
 0
 end_operator
 begin_operator
