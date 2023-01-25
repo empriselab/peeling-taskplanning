@@ -32,5 +32,8 @@
     (OnTable food_item)
 
     (FullyPeeled food_item)
-))
+    (OuterHalfPeeled food_item)
+    (TopPeeled food_item)
+    )
+)
 )
