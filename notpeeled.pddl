@@ -1,3 +1,6 @@
+; In this problem, the food item is not peeled at all.
+; The food item is not between the two jaws, and the jaws are too close together.
+; The goal is to fully peel the food item.
 (define (problem peeling)(:domain emprise)
 
 (:objects

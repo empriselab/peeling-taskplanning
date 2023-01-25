@@ -71,7 +71,7 @@
         (not(HandEmpty))
         (not(IsBetween ?a ?b ?c))
         (not(JawsAreTooClose ?b ?c))
-        (or(JawsAreRightDistance ?b ?c)(JawsAreTooFar ?b ?c))
+        ;(or(JawsAreRightDistance ?b ?c)(JawsAreTooFar ?b ?c))
     )
     :effect (IsBetween ?a ?b ?c)
 )
@@ -118,6 +118,7 @@
     )
     :effect (and
         (not(JawsAreTooFar ?c ?d))
+        (not (JawsAreTooClose ?c ?d))
         (JawsAreRightDistance ?c ?d)
     )
 )
@@ -127,8 +128,9 @@
     :precondition (and 
         (not(IsLocked ?a))
         
-        (not(JawsAreTooFar ?c ?d)) ; too close or JawsAreRightDistance
-        (or(JawsAreTooClose ?c ?d) (JawsAreRightDistance ?c ?d))
+        (not (JawsAreTooFar ?c ?d)) ; too close 
+        (JawsAreTooClose ?c ?d)
+        (not (JawsAreRightDistance ?c ?d))
     )
     :effect (and
         (JawsAreTooFar ?c ?d)
@@ -159,7 +161,7 @@
         )
     :effect (and
         (TopPeeled ?a)
-        (oneof (outerHalfPeeled ?a) (not(OuterHalfPeeled ?a)))
+        (oneof (OuterHalfPeeled ?a) (not(OuterHalfPeeled ?a)))
             ; (and 
             ;     (not(inner ?a))
             ;     (not(FullyPeeled ?a))
@@ -190,7 +192,8 @@
 
         (not(JawsAreTooClose ?c ?d))
         ; (or(JawsAreRightDistance ?c ?d) (JawsAreTooFar ?c ?d))
-    )
+        (IsBetween ?a ?c ?d)
+        )
     :effect (and 
         (not (TopPeeled ?a))
         (oneof
@@ -220,8 +223,9 @@
         ; (or(JawsAreRightDistance ?c ?d) (JawsAreTooFar ?c ?d))
         )
     :effect (and 
-        (InnerHalfPeeled ?a)
+        (not(TopPeeled ?a))
         (not(OuterHalfPeeled ?a))
+        (InnerHalfPeeled ?a)
         ; (oneof (not (TopPeeled ?a)) (TopPeeled ?a))
         (oneof
             (and     (JawsAreTooFar ?c ?d)(not(JawsAreRightDistance ?c ?d)))
