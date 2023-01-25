@@ -1,3 +1,7 @@
+; In this problem, only the inner half of the food item is peeled,
+; And the top part of the outer half is also peeled
+; The food item is still clamped between the two jaws, and the gripper is empty.
+; The goal is to peel the entire food item.
 (define (problem peeling)(:domain emprise)
 
 (:objects
@@ -17,12 +21,12 @@
     (not(Holding food_peeler))
 
     (islocked vice_handle)
-    (not(IsBetween food_item moving_jaw stationary_jaw))
+    (IsBetween food_item moving_jaw stationary_jaw)
     (not(JawsAreTooFar moving_jaw stationary_jaw))
-    (not(JawsAreRightDistance moving_jaw stationary_jaw))
-    (JawsAreTooClose moving_jaw stationary_jaw)
+    (JawsAreRightDistance moving_jaw stationary_jaw)
+    (not(JawsAreTooClose moving_jaw stationary_jaw))
 
-    (not(TopPeeled food_item))
+    (TopPeeled food_item)
     (not(OuterHalfPeeled food_item))
     (InnerHalfPeeled food_item)
 )
