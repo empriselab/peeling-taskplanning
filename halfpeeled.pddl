@@ -22,15 +22,17 @@
     (not(JawsAreRightDistance moving_jaw stationary_jaw))
     (JawsAreTooClose moving_jaw stationary_jaw)
 
+    (TopPeeled food_item)
     (OuterHalfPeeled food_item)
-    (not(TopPeeled food_item))
-    (not(FullyPeeled food_item))
+    (not(InnerHalfPeeled food_item))
 )
 
 
 (:goal (and
     (OnTable food_item)
 
-    (FullyPeeled food_item)
+    (OuterHalfPeeled food_item)
+    (InnerHalfPeeled food_item)
+    (TopPeeled food_item)
 ))
 )

@@ -27,8 +27,10 @@
     
     ; peeling
     (TopPeeled ?a - food);food is peeled on top ignoring the part held between the jaws
-    (OuterHalfPeeled ?a - food) ;food item is peeled except for the part held between the jaws
-    (FullyPeeled ?a - food);food is fully peeled
+    (OuterHalfPeeled ?a - food) ;the part of the food NOT clamped by the jaws is peeled
+    (InnerHalfPeeled ?a - food);the part of the food clamped by the jaws is peeled
+    ; food is fully peeled if the outer and inner half are peeled
+    ;(FullyPeeled ?a - food);food is fully peeled;
 )
 
 (:action PickUp 
@@ -145,7 +147,7 @@
     ;    (stop/proceed)
     :parameters (?a - food ?b - peeler ?c - movjaw ?d - statjaw ?e - handle)
     :precondition (and 
-        (not(FullyPeeled ?a))
+        (not(OuterHalfPeeled ?a))
         (not(TopPeeled ?a))
         (Holding ?b)
         (IsLocked ?e)
@@ -157,21 +159,20 @@
         )
     :effect (and
         (TopPeeled ?a)
-        (oneof 
-            (and 
-                (not(OuterHalfPeeled ?a))
-                (not(FullyPeeled ?a))
-            )
-            (and
-                (OuterHalfPeeled ?a)
-                (not(FullyPeeled ?a))
-            )
-            (and
-                (OuterHalfPeeled ?a)
-                (FullyPeeled ?a)
-            )
+        (oneof (outerHalfPeeled ?a) (not(OuterHalfPeeled ?a)))
+            ; (and 
+            ;     (not(inner ?a))
+            ;     (not(FullyPeeled ?a))
+            ; )
+            ; (and
+            ;     (OuterHalfPeeled ?a)
+            ;     (not(FullyPeeled ?a))
+            ; )
+            ; (and
+            ;     (OuterHalfPeeled ?a)
+            ;     (FullyPeeled ?a)
+            ; )
         )
-    )
 )
 (:action Rotate 
     ; rotate the food item (non-deterministic)
@@ -185,10 +186,10 @@
 
         (TopPeeled ?a)
         (not(OuterHalfPeeled ?a))
-        (not(FullyPeeled ?a))
+        ; (not(FullyPeeled ?a))
 
         (not(JawsAreTooClose ?c ?d))
-        (or(JawsAreRightDistance ?c ?d) (JawsAreTooFar ?c ?d))
+        ; (or(JawsAreRightDistance ?c ?d) (JawsAreTooFar ?c ?d))
     )
     :effect (and 
         (not (TopPeeled ?a))
@@ -196,7 +197,7 @@
             (and     (JawsAreTooFar ?c ?d)(not(JawsAreRightDistance ?c ?d)))
             (and (not(JawsAreTooFar ?c ?d))   (JawsAreRightDistance ?c ?d))
         )
-    )
+        )
 )
 (:action Flip
     ; flip the food item (non-deterministic)
@@ -213,19 +214,20 @@
 
         (TopPeeled ?a)
         (OuterHalfPeeled ?a)
-        (not(FullyPeeled ?a))
+        (not(InnerHalfPeeled ?a))
 
         (not(JawsAreTooClose ?c ?d))
-        (or(JawsAreRightDistance ?c ?d) (JawsAreTooFar ?c ?d))
-    )
+        ; (or(JawsAreRightDistance ?c ?d) (JawsAreTooFar ?c ?d))
+        )
     :effect (and 
+        (InnerHalfPeeled ?a)
         (not(OuterHalfPeeled ?a))
-        (oneof (not (TopPeeled ?a)) (TopPeeled ?a))
+        ; (oneof (not (TopPeeled ?a)) (TopPeeled ?a))
         (oneof
             (and     (JawsAreTooFar ?c ?d)(not(JawsAreRightDistance ?c ?d)))
             (and (not(JawsAreTooFar ?c ?d))   (JawsAreRightDistance ?c ?d))
         )
-    )
+        )
 )
 
 )
