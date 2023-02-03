@@ -1,8 +1,6 @@
 ;; This is the domain of a world where a robot arm picks up a given object, 
 ;; peels it using a designated commersial peeler and puts it back down.
 
-;; test if this domain is valid...
-
 (define (domain emprise)
 
 (:requirements 
@@ -71,7 +69,6 @@
         (not(HandEmpty))
         (not(IsBetween ?a ?b ?c))
         (not(JawsAreTooClose ?b ?c))
-        ;(or(JawsAreRightDistance ?b ?c)(JawsAreTooFar ?b ?c))
     )
     :effect (IsBetween ?a ?b ?c)
 )
@@ -110,7 +107,7 @@
     :precondition (and
         (not (IsLocked ?a))
         
-        (JawsAreTooFar ?c ?d)
+        ;(JawsAreTooFar ?c ?d)
         (not (JawsAreTooClose ?c ?d))
         (not (JawsAreRightDistance ?c ?d))
 
@@ -141,12 +138,8 @@
 (:action Peel 
     ; to peel the food item (non-deterministic)
     ; depending on the global state, the effect can either be that the
-    ; 1) food item is not peeled on the outer half, not fully peeled
-    ;    (rotate then peel)
-    ; 2) food item is peeled on the outer half, not fully peeled 
-    ;    (flip then peel)
-    ; 3) food item is peeled on the outer half, fully peeled
-    ;    (stop/proceed)
+    ; 1) outer half of the food is fully peeled
+    ; 2) outer half of the food is not fully peeled
     :parameters (?a - food ?b - peeler ?c - movjaw ?d - statjaw ?e - handle)
     :precondition (and 
         (not(OuterHalfPeeled ?a))
@@ -162,18 +155,6 @@
     :effect (and
         (TopPeeled ?a)
         (oneof (OuterHalfPeeled ?a) (not(OuterHalfPeeled ?a)))
-            ; (and 
-            ;     (not(inner ?a))
-            ;     (not(FullyPeeled ?a))
-            ; )
-            ; (and
-            ;     (OuterHalfPeeled ?a)
-            ;     (not(FullyPeeled ?a))
-            ; )
-            ; (and
-            ;     (OuterHalfPeeled ?a)
-            ;     (FullyPeeled ?a)
-            ; )
         )
 )
 (:action Rotate 
@@ -188,10 +169,8 @@
 
         (TopPeeled ?a)
         (not(OuterHalfPeeled ?a))
-        ; (not(FullyPeeled ?a))
 
         (not(JawsAreTooClose ?c ?d))
-        ; (or(JawsAreRightDistance ?c ?d) (JawsAreTooFar ?c ?d))
         (IsBetween ?a ?c ?d)
         )
     :effect (and 
@@ -204,9 +183,6 @@
 )
 (:action Flip
     ; flip the food item (non-deterministic)
-    ; depending on the global state, the effect can either be that the
-    ; 1) the top of the food item is peeled (must rotate before peeling)
-    ; 2) the top of the food item is not peeled (check if the state of the jaws...)
     ; state of the jaws can be:
     ; 1) the jaws are too far apart (must adjust moving jaw position)
     ; 2) the jaws are right distance apart (proceeds to next step)
@@ -220,13 +196,11 @@
         (not(InnerHalfPeeled ?a))
 
         (not(JawsAreTooClose ?c ?d))
-        ; (or(JawsAreRightDistance ?c ?d) (JawsAreTooFar ?c ?d))
         )
     :effect (and 
         (not(TopPeeled ?a))
         (not(OuterHalfPeeled ?a))
         (InnerHalfPeeled ?a)
-        ; (oneof (not (TopPeeled ?a)) (TopPeeled ?a))
         (oneof
             (and     (JawsAreTooFar ?c ?d)(not(JawsAreRightDistance ?c ?d)))
             (and (not(JawsAreTooFar ?c ?d))   (JawsAreRightDistance ?c ?d))
